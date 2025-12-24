@@ -29,7 +29,7 @@ APP_DIR = Path(__file__).resolve().parent
 CONFIG_PATH = APP_DIR / "config.json"
 
 # Folder that contains i18n JSON files
-LOCALES_DIR = APP_DIR / "locales"
+LOCALES_DIR = APP_DIR / "core" / "locales"
 
 
 # ---------------------------------------------------------------------------
