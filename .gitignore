@@ -1,0 +1,19 @@
+# ⌘
+# /fileknight/.gitignore
+#
+# Created by @jonathaxs on 2025-12-23
+# ⌘
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+
+# VS Code
+.vscode/

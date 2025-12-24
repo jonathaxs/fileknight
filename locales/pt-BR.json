@@ -1,0 +1,16 @@
+{
+  "_meta": {
+    "file": "pt-BR.json",
+    "path": "/locales/pt-BR.json",
+    "language": "pt-BR(portuguese brazil)",
+    "created_by": "@jonathaxs",
+    "created_at": "2025-12-23"
+  },
+  "app_title": "📁⚔️ FileKnight",
+  "select_source": "Selecionar origem",
+  "select_destination": "Selecionar destino",
+  "entry_name": "Nome da entrada",
+  "run_backup": "Copiar",
+  "export_config": "Exportar config",
+  "import_config": "Importar config"
+}
