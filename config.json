@@ -1,0 +1,17 @@
+{
+  "_meta": {
+    "file": "config.json",
+    "path": "/fileknight/config.json",
+    "created_by": "@jonathaxs",
+    "created_at": "2025-12-24"
+  },
+  "language": "auto",
+  "destination_root": "~/FileKnightBackups",
+  "entries": [
+    {
+      "name": "Dark Souls 3",
+      "source": "~/Desktop/DS3",
+      "mode": "mirror"
+    }
+  ]
+}
