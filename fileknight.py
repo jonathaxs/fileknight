@@ -9,9 +9,12 @@
 from __future__ import annotations
 
 import platform
+import sys
 from datetime import datetime
 from pathlib import Path
 
+from core.cli import parse_args
+from core.config_io import export_config, import_config, write_default_config
 from core.config_manager import load_config, expand_user_and_vars, validate_entries
 from core.copier import copy_item
 from core.i18n import detect_language_code, load_locale, t
@@ -21,11 +24,27 @@ APP_DIR = Path(__file__).resolve().parent
 CONFIG_PATH = APP_DIR / "config.json"
 
 
-def main() -> int:
+def main(argv: list[str]) -> int:
+    options = parse_args(argv)
+
+    # If config doesn't exist, create a default one and exit (friendly first-run behavior)
     if not CONFIG_PATH.exists():
-        print(f"[ERROR] Missing config file: {CONFIG_PATH}")
-        print("Create a config.json next to fileknight.py.")
-        return 1
+        write_default_config(CONFIG_PATH)
+        print(f"[INFO] config.json was created at: {CONFIG_PATH}")
+        print("[INFO] Edit it with your paths and run FileKnight again.")
+        return 0
+
+    # Import config (replace current)
+    if options.import_path is not None:
+        import_config(options.import_path, CONFIG_PATH)
+        print(f"[OK] Config imported: {options.import_path} -> {CONFIG_PATH}")
+        return 0
+
+    # Export config (copy to directory)
+    if options.export_dir is not None:
+        exported = export_config(CONFIG_PATH, options.export_dir)
+        print(f"[OK] Config exported to: {exported}")
+        return 0
 
     cfg = load_config(CONFIG_PATH)
 
@@ -33,7 +52,9 @@ def main() -> int:
     lang = detect_language_code() if language_setting == "auto" else language_setting
     strings = load_locale(lang)
 
-    dry_run = bool(cfg.get("dry_run", False))
+    # config.dry_run can be overridden by CLI flags
+    dry_run_cfg = bool(cfg.get("dry_run", False))
+    dry_run = dry_run_cfg if options.dry_run_override is None else options.dry_run_override
 
     destination_raw = str(cfg.get("destination_root", "")).strip()
     if not destination_raw:
@@ -76,4 +97,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main(sys.argv[1:]))
