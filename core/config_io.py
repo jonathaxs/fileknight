@@ -45,7 +45,7 @@ def write_default_config(config_path: Path) -> None:
 
 def export_config(config_path: Path, export_dir: Path) -> Path:
     export_dir.mkdir(parents=True, exist_ok=True)
-    target = export_dir / f"fileknight_config_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    target = export_dir / f"fileknight_{datetime.now().strftime('%Y-%m-%d_%Hh%Mm%Ss')}_config.json"
     shutil.copy2(config_path, target)
     return target
 
