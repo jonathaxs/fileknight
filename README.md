@@ -13,6 +13,7 @@ Automates copying folders or files from one location to another, acting as a rel
 
 
 *Instructions on `readme.txt`*
+
 *Developed with Python.*
 
 
@@ -26,5 +27,6 @@ Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando co
 
 
 *Instruções em `readme.txt`*
+
 *Desenvolvido com Python.*
 
