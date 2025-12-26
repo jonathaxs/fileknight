@@ -20,3 +20,23 @@ Created by @jonathaxs on 2025-12-23.
 **Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando como um checkpoint seguro.**
 
 *Desenvolvido com Python.*
+
+---
+
+## How to use
+
+- GUI (recommended for beginners):
+  python3 fileknight_app.py
+
+- CLI / Script mode:
+  python3 fileknight_run.py
+
+---
+
+## Como usar
+
+- GUI (recomendado para leigos):
+  python3 fileknight_app.py
+
+- CLI / Script mode:
+  python3 fileknight_run.py
