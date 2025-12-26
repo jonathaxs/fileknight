@@ -56,7 +56,6 @@ def validate_entries(cfg: dict[str, Any]) -> list[Entry]:
 
     if not parsed:
         raise ValueError("No valid entries found in config.json")
-
     return parsed
 
 def load_config_raw(path: Path) -> dict[str, Any]:
