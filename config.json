@@ -7,11 +7,11 @@
   },
   "language": "auto",
   "dry_run": false,
-  "destination_root": "~/Desktop/FileKnight",
+  "destination_root": "~/Documents/FileKnightDestination",
   "entries": [
     {
-      "name": "Dark Souls 3",
-      "source": "~/Desktop/DS3",
+      "name": "TestFolder",
+      "source": "~/Downloads/FileKnightSource",
       "mode": "mirror"
     }
   ]
