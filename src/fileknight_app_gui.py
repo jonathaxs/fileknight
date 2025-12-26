@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 # Add /fileknight/src to Python path so "core" can be imported
-SRC_DIR = Path(__file__).resolve().parents[1]
+SRC_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SRC_DIR))
 
 ROOT_DIR = SRC_DIR.parent
