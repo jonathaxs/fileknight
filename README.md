@@ -11,6 +11,7 @@ Created by @jonathaxs on 2025-12-23.
 
 Automates copying folders or files from one location to another, acting as a reliable checkpoint against forgetfulness.
 
+
 *Developed with Python.*
 
 
@@ -29,11 +30,12 @@ python3 fileknight_run.py
 
 ---
 
-# 🇧🇷 PT-BR
+# 🇧🇷 FileKnight
 
 **Uma simples ferramenta multiplataforma que protege seus arquivos contra o esquecimento.**
 
 Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando como um checkpoint seguro.
+
 
 *Desenvolvido com Python.*
 
