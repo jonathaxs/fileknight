@@ -1,0 +1,14 @@
+# ⌘
+#
+#  /fileknight/src/hello/fileknight_hello/hello_world.txt
+#
+#  Created by @jonathaxs on 2025-12-26.
+#
+# ⌘
+
+Hello World!
+My name is FileKnight!
+
+
+Olá Mundo!
+Meu nome é FileKnight!
