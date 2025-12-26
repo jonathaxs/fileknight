@@ -1,6 +1,6 @@
 # ⌘
 #
-#  /fileknight/fileknight_app.py
+#  /fileknight/fileknight_app_gui.py
 #
 #  Created by @jonathaxs on 2025-12-25.
 #
@@ -8,9 +8,18 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+# Add /fileknight/src to Python path so "core" can be imported
+SRC_DIR = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(SRC_DIR))
+
+ROOT_DIR = SRC_DIR.parent
+CONFIG_PATH = ROOT_DIR / "config.json"
+
 import tkinter as tk
 from tkinter import filedialog, messagebox
-from pathlib import Path
 
 from core.config_io import write_default_config, export_config, import_config
 from core.config_manager import (
@@ -25,10 +34,6 @@ from core.config_manager import (
 from core.config_manager import validate_entries
 from core.copier import copy_item
 from core.i18n import detect_language_code, load_locale, t
-
-
-APP_DIR = Path(__file__).resolve().parent
-CONFIG_PATH = APP_DIR / "config.json"
 
 
 class FileKnightGUI:

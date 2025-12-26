@@ -16,12 +16,12 @@ from typing import Any
 
 
 def project_root() -> Path:
-    # .../fileknight/core/i18n.py -> parents[1] == .../fileknight
-    return Path(__file__).resolve().parents[1]
+    # .../src/core/i18n.py -> parents[2] == .../fileknight
+    return Path(__file__).resolve().parents[2]
 
 
 def translations_dir() -> Path:
-    return project_root() / "core" / "translations"
+    return project_root() / "src" / "translations"
 
 
 def detect_language_code() -> str:
