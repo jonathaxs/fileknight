@@ -1,6 +1,6 @@
 # ⌘
 #
-#  /fileknight/fileknight_app_gui.py
+#  /fileknight/src/fileknight_app_gui.py
 #
 #  Created by @jonathaxs on 2025-12-25.
 #
