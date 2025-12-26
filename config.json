@@ -10,8 +10,8 @@
   "destination_root": "~/Desktop",
   "entries": [
     {
-      "name": "Hello Test Folder",
-      "source": "src/hello/fileknight_hello",
+      "name": "FileKnight Hello",
+      "source": "src/hello",
       "mode": "copy"
     }
   ]
