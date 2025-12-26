@@ -1,6 +1,6 @@
 # ⌘
 #
-#  /fileknight/fileknight.py
+#  /fileknight/fileknight_run.py
 #
 #  Created by @jonathaxs on 2025-12-23.
 #
