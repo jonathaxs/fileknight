@@ -17,3 +17,7 @@ venv/
 
 # VS Code
 .vscode/
+
+# Release builds
+releases/
+*.zip
