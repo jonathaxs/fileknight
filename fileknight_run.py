@@ -74,7 +74,7 @@ def main(argv: list[str]) -> int:
     header = f"{t(strings, 'app_title').strip()}  |  {platform.system()}  |  {stamp}"
     print(header)
     print(f"{t(strings, 'select_destination')}: {destination_root}")
-    print(f"dry_run: {dry_run}")
+    print(f"{t(strings, 'label_dry_run_cli')}: {dry_run}")
     print("-" * 60)
 
     ok = 0
@@ -94,7 +94,7 @@ def main(argv: list[str]) -> int:
             fail += 1
 
     print("-" * 60)
-    print(f"OK: {ok} | FAIL: {fail}")
+    print(t(strings, "summary_ok_fail").format(ok=ok, fail=fail))
 
     return 0 if fail == 0 else 2
 
