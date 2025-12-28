@@ -86,8 +86,8 @@ class FileKnightGUI:
         row_src.pack(fill="x")
 
         tk.Entry(row_src, textvariable=self.source_var).pack(side="left", fill="x", expand=True)
-        tk.Button(row_src, text="File", width=6, command=self._choose_source_file).pack(side="left", padx=(6, 0))
-        tk.Button(row_src, text="Folder", width=6, command=self._choose_source_folder).pack(side="left", padx=(6, 0))
+        tk.Button(row_src, text=t(self.strings, "btn_file"), width=6, command=self._choose_source_file).pack(side="left", padx=(6, 0))
+        tk.Button(row_src, text=t(self.strings, "btn_folder"), width=6, command=self._choose_source_folder).pack(side="left", padx=(6, 0))
 
         row_info = tk.Frame(frm_mid)
         row_info.pack(fill="x", pady=(8, 0))
@@ -95,10 +95,15 @@ class FileKnightGUI:
         tk.Label(row_info, text=t(self.strings, "entry_name")).pack(side="left")
         tk.Entry(row_info, textvariable=self.name_var, width=28).pack(side="left", padx=(6, 16))
 
-        tk.Label(row_info, text="mode").pack(side="left")
+        tk.Label(row_info, text=t(self.strings, "label_mode")).pack(side="left")
         tk.OptionMenu(row_info, self.mode_var, "mirror", "copy").pack(side="left", padx=(6, 16))
 
-        tk.Checkbutton(row_info, text="dry_run", variable=self.dry_run_var, command=self._toggle_dry_run).pack(side="left")
+        tk.Checkbutton(
+            row_info,
+            text=t(self.strings, "label_dry_run"),
+            variable=self.dry_run_var,
+            command=self._toggle_dry_run
+        ).pack(side="left")
 
         # Bottom left: entries list
         frm_bottom = tk.Frame(self.root)
@@ -107,7 +112,7 @@ class FileKnightGUI:
         left = tk.Frame(frm_bottom)
         left.pack(side="left", fill="both", expand=True)
 
-        tk.Label(left, text="entries").pack(anchor="w")
+        tk.Label(left, text=t(self.strings, "label_entries")).pack(anchor="w")
         self.entries_list = tk.Listbox(left, height=10)
         self.entries_list.pack(fill="both", expand=True)
         self.entries_list.bind("<<ListboxSelect>>", self._on_select_entry)
@@ -116,8 +121,8 @@ class FileKnightGUI:
         right = tk.Frame(frm_bottom)
         right.pack(side="left", fill="y", padx=(pad, 0))
 
-        tk.Button(right, text="Add/Update", width=18, command=self._add_update_entry).pack(pady=(0, 8))
-        tk.Button(right, text="Remove", width=18, command=self._remove_selected).pack(pady=(0, 16))
+        tk.Button(right, text=t(self.strings, "btn_add_update"), width=18, command=self._add_update_entry).pack(pady=(0, 8))
+        tk.Button(right, text=t(self.strings, "btn_remove"), width=18, command=self._remove_selected).pack(pady=(0, 16))
 
         tk.Button(right, text=t(self.strings, "run_backup"), width=18, command=self._run_backup).pack(pady=(0, 8))
         tk.Button(right, text=t(self.strings, "export_config"), width=18, command=self._export_cfg).pack(pady=(0, 8))
@@ -176,16 +181,16 @@ class FileKnightGUI:
         mode = self.mode_var.get().strip().lower()
 
         if not name:
-            messagebox.showwarning("FileKnight", "Please set a name.")
+            messagebox.showwarning(t(self.strings, "msg_done_title"), t(self.strings, "warn_set_name"))
             return
         if not source:
-            messagebox.showwarning("FileKnight", "Please select a source.")
+            messagebox.showwarning(t(self.strings, "msg_done_title"), t(self.strings, "warn_select_source"))
             return
 
         add_or_update_entry(self.cfg, name=name, source=source, mode=mode)
         save_config(CONFIG_PATH, self.cfg)
         self._refresh_entries_list()
-        self.status.set(f"Saved entry: {name}")
+        self.status.set(t(self.strings, "status_saved_entry").format(name=name))
 
     def _remove_selected(self) -> None:
         sel = self.entries_list.curselection()
@@ -195,7 +200,7 @@ class FileKnightGUI:
         if remove_entry(self.cfg, name):
             save_config(CONFIG_PATH, self.cfg)
             self._refresh_entries_list()
-            self.status.set(f"Removed entry: {name}")
+            self.status.set(t(self.strings, "status_removed_entry").format(name=name))
 
     def _run_backup(self) -> None:
         # Ensure destination is saved
@@ -223,8 +228,11 @@ class FileKnightGUI:
             except Exception:
                 fail += 1
 
-        self.status.set(f"Backup finished | OK: {ok} | FAIL: {fail}")
-        messagebox.showinfo("FileKnight", f"Done!\nOK: {ok}\nFAIL: {fail}")
+        self.status.set(t(self.strings, "status_backup_finished").format(ok=ok, fail=fail))
+
+        title = t(self.strings, "msg_done_title")
+        body = t(self.strings, "msg_done_body").format(ok=ok, fail=fail)
+        messagebox.showinfo(title, body)
 
     def _export_cfg(self) -> None:
         folder = filedialog.askdirectory()
@@ -232,7 +240,10 @@ class FileKnightGUI:
             return
         exported = export_config(CONFIG_PATH, Path(folder))
         self.status.set(f"Exported: {exported}")
-        messagebox.showinfo("FileKnight", f"Exported config:\n{exported}")
+
+        title = t(self.strings, "msg_export_title")
+        body = t(self.strings, "msg_export_body").format(path=exported)
+        messagebox.showinfo(title, body)
 
     def _import_cfg(self) -> None:
         path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
@@ -244,7 +255,10 @@ class FileKnightGUI:
         self.dry_run_var.set(bool(self.cfg.get("dry_run", False)))
         self._refresh_entries_list()
         self.status.set("Config imported.")
-        messagebox.showinfo("FileKnight", "Config imported successfully!")
+
+        title = t(self.strings, "msg_import_title")
+        body = t(self.strings, "msg_import_body")
+        messagebox.showinfo(title, body)
 
 
 def main() -> None:
