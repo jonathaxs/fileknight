@@ -20,8 +20,8 @@ CONFIG_PATH = ROOT_DIR / "config.json"
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
-from core.config_io import write_default_config, export_config, import_config
-from core.config_manager import (
+from core.config.io import write_default_config, export_config, import_config
+from core.config.manager import (
     load_config_raw,
     load_config,
     save_config,
@@ -29,9 +29,9 @@ from core.config_manager import (
     remove_entry,
     set_destination_root,
     set_dry_run,
+    validate_entries,
 )
-from core.config_manager import validate_entries
-from core.copier import copy_item
+from core.backup.copier import copy_item
 from core.i18n import detect_language_code, load_locale, t
 
 
