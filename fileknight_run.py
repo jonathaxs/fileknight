@@ -15,15 +15,16 @@ ROOT_DIR = Path(__file__).resolve().parent
 SRC_DIR = ROOT_DIR / "src"
 sys.path.insert(0, str(SRC_DIR))
 
+from core.cli import parse_args
+
 CONFIG_PATH = ROOT_DIR / "config.json"
 
 import platform
 from datetime import datetime
 
-from core.cli import parse_args
-from core.config_io import export_config, import_config, write_default_config
-from core.config_manager import load_config, expand_user_and_vars, validate_entries
-from core.copier import copy_item
+from core.config.io import export_config, import_config, write_default_config
+from core.config.manager import load_config, expand_user_and_vars, validate_entries
+from core.backup.copier import copy_item
 from core.i18n import detect_language_code, load_locale, t
 
 
