@@ -1,6 +1,6 @@
 # ⌘
 #
-#  /fileknight/core/config/io.py
+#  /fileknight/src/core/config/io.py
 #
 #  Created by @jonathaxs on 2025-12-25.
 #
