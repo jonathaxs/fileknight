@@ -38,6 +38,6 @@
   "msg_import_title": "FileKnight",
   "msg_import_body": "Config imported successfully!",
 
-  "label_dry_run_cli": "dry_run",
+  "label_dry_run_cli": "Dry run",
   "summary_ok_fail": "OK: {ok} | FAIL: {fail}"
 }
