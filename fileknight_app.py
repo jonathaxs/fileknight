@@ -1,9 +1,9 @@
 # ⌘
-#
 #  /fileknight/fileknight_app.py
 #
-#  Created by @jonathaxs on 2025-12-25.
+#  Purpose: GUI entry point for FileKnight (Tkinter app to manage config and run backups).
 #
+#  Created by @jonathaxs on 2025-12-25.
 # ⌘
 
 from __future__ import annotations
