@@ -1,9 +1,9 @@
 # ⌘
-#
 #  /fileknight/core/config/manager.py
 #
-#  Created by @jonathaxs on 2025-12-25.
+#  Purpose: Loads, validates, and updates config data used by GUI and CLI.
 #
+#  Created by @jonathaxs on 2025-12-25.
 # ⌘
 
 from __future__ import annotations

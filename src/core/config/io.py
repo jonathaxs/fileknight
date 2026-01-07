@@ -1,9 +1,9 @@
 # ⌘
-#
 #  /fileknight/src/core/config/io.py
 #
-#  Created by @jonathaxs on 2025-12-25.
+#  Purpose: Handles config.json file IO (create default, export, import).
 #
+#  Created by @jonathaxs on 2025-12-25.
 # ⌘
 
 from __future__ import annotations
