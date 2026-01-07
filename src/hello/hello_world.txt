@@ -1,9 +1,9 @@
 # ⌘
-#
 #  /fileknight/src/hello/hello_world.txt
 #
-#  Created by @jonathaxs on 2025-12-26.
+#  Purpose: Demo source file used for the default config entry (safe test backup).
 #
+#  Created by @jonathaxs on 2025-12-26.
 # ⌘
 
 Hello World!
