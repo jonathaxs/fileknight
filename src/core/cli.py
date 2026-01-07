@@ -1,9 +1,9 @@
 # ⌘
-#
 #  /fileknight/core/cli.py
 #
-#  Created by @jonathaxs on 2025-12-25.
+#  Purpose: Defines CLI arguments and parses command-line options for fileknight_run.py.
 #
+#  Created by @jonathaxs on 2025-12-25.
 # ⌘
 
 from __future__ import annotations
