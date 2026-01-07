@@ -1,9 +1,9 @@
 # ⌘
-#
 #  /fileknight/fileknight_run.py
 #
-#  Created by @jonathaxs on 2025-12-23.
+#  Purpose: CLI entry point for FileKnight (directly runs backups from config.json and supports export/import).
 #
+#  Created by @jonathaxs on 2025-12-23.
 # ⌘
 
 from __future__ import annotations
