@@ -1,9 +1,9 @@
 # ⌘
-#
 #  /fileknight/core/models.py
 #
-#  Created by @jonathaxs on 2025-12-25.
+#  Purpose: Data models used across the project (e.g., Entry).
 #
+#  Created by @jonathaxs on 2025-12-25.
 # ⌘
 
 from __future__ import annotations
