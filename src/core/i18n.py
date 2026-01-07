@@ -1,9 +1,9 @@
 # ⌘
-#
 #  /fileknight/core/i18n.py
 #
-#  Created by @jonathaxs on 2025-12-25.
+#  Purpose: Loads translations and detects system language (EN/PT-BR).
 #
+#  Created by @jonathaxs on 2025-12-25.
 # ⌘
 
 from __future__ import annotations
