@@ -7,10 +7,10 @@ FileKnight - Quick Guide (EN / PT-BR)
 
 2) Run (GUI(App) - recommended)
 Open a terminal inside the "fileknight" folder and run:
->   python3 fileknight_app.py
+>   python3 fk.py
 
 3) Run (CLI / script mode)
-    python3 fileknight_run.py
+    python3 fkrun.py
 Optional flags:
     --dry-run    (simulate, no real copy)
     --run        (force real copy)
@@ -53,10 +53,10 @@ Guia rápido em PORTUGUÊS (BR)
 
 2) Rodar (GUI(App) - recomendado)
 Abra um terminal dentro da pasta "fileknight" e rode:
->   python3 fileknight_app.py
+>   python3 fk.py
 
 3) Rodar (CLI / modo script)
-    python3 fileknight_run.py
+    python3 fkrun.py
 Flags opcionais:
     --dry-run    (simula, não copia de verdade)
     --run        (força cópia real)
