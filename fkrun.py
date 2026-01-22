@@ -1,5 +1,5 @@
 # ⌘
-#  /fileknight/fileknight_run.py
+#  /fileknight/fkrun.py
 #
 #  Purpose: CLI entry point for FileKnight (directly runs backups from config.json and supports export/import).
 #
