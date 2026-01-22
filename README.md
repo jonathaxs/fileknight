@@ -19,7 +19,8 @@ Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando co
 
 ---
 
-# 📁⚔️ FileKnight (EN)
+
+# (EN) FileKnight
 
 **A simple cross-platform tool that protects your files from being lost.**
 
