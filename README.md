@@ -20,7 +20,7 @@ Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando co
 ---
 
 
-# (EN) FileKnight
+# (en) FileKnight
 
 **A simple cross-platform tool that protects your files from being lost.**
 
