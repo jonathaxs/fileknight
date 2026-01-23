@@ -1,0 +1,88 @@
+Windows - FileKnight Quick Guide (PT-BR / EN)
+Version 1.2
+
+======================-------------------------------------
+Guia rápido (PT-BR)  |  (PT-BR Quick Guide, English below)
+======================-------------------------------------
+
+*******************
+1) INSTALAR Python (Windows)
+- Baixe e instale o Python 3:
+  https://www.python.org/downloads/
+- IMPORTANTE: marque a opção "Add Python to PATH" no instalador.
+
+
+**************************************
+2) ABRIR FileKnight
+- Dois cliques em "fk.py" (ou Abrir como Python)
+
+
+
+*******************
+3) (Opcional) RODAR FileKnight direto (modo script / CLI)
+Se você já configurou tudo no config.json e quer rodar sem abrir a janela:
+
+Abra o Terminal (Prompt de Comando ou PowerShell) na pasta "fileknight" e rode:
+> python fkrun.py
+
+Flags opcionais:
+  --dry-run            (simula, não copia de verdade)
+  --run                (força cópia real)
+  --export-config [pasta]
+  --import-config <arquivo.json>
+
+
+*******************
+4) (Opcional) Configuração (config.json)
+As configurações do FileKnight ficam no arquivo:
+  config.json
+
+Você pode:
+- Editar manualmente os caminhos
+- Usar a GUI (janela) para adicionar/remover entradas
+- Exportar/Importar o config usando os botões da GUI
+  (útil para levar suas configurações para outro PC)
+
+
+
+======================-------------------------------------
+(ENGLISH) Quick Guide |      (Guia rápido em Inglês)
+======================-------------------------------------
+
+*******************
+1) INSTALL Python (Windows)
+- Download and install Python 3:
+  https://www.python.org/downloads/
+- IMPORTANT: enable "Add Python to PATH" during install.
+
+
+**************************************
+2) OPEN FileKnight
+- Double click "fk.py" (or Open as Python)
+
+
+
+*******************
+3) (Optional) RUN FileKnight directly (script / CLI mode)
+If you already configured everything in config.json and want to run without the GUI:
+
+Open a Terminal (Command Prompt or PowerShell) inside the "fileknight" folder and run:
+> python fkrun.py
+
+Optional flags:
+  --dry-run            (simulate, no real copy)
+  --run                (force real copy)
+  --export-config [folder]
+  --import-config <file.json>
+
+
+*******************
+4) (Optional) Configuration (config.json)
+FileKnight settings are stored in:
+  config.json
+
+You can:
+- Edit paths manually
+- Use the GUI (window) to add/remove entries
+- Export/Import the config using the GUI buttons
+  (useful to move your setup to another PC)
