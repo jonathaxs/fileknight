@@ -1,0 +1,15 @@
+
+1)
+Com o Terminal na Pasta "fileknight"
+
+With the Terminal in the "fileknight" folder
+
+
+2)
+Digite isso no Terminal para Rodar direto o FileKnight com as configurações já configuradas:
+
+Type this into the Terminal to run FileKnight directly with the settings already set:
+
+
+3)
+python3 fkrun.py
