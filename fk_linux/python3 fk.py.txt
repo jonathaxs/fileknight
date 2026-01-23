@@ -1,0 +1,7 @@
+
+Digite isso no Terminal para Abrir o FileKnight:
+
+Type this into the Terminal to open FileKnight:
+
+
+python3 fk.py
