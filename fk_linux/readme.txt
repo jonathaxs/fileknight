@@ -38,8 +38,8 @@ Teste:
 
 
 
-*******************
-5) (Opcional) RODAR FileKnight direto (modo script / CLI)
+^^^^^^^^^^^^^^^^^^^
+5) (OPCIONAL) RODAR FileKnight direto (modo script / CLI)
 > python3 fkrun.py
 
 Flags opcionais:
@@ -49,8 +49,8 @@ Flags opcionais:
   --import-config <arquivo.json>
 
 
-*******************
-6) (Opcional) CONFIG
+^^^^^^^^^^^^^^^^^^^
+6) (OPCIONAL) CONFIG
 As configurações ficam em:
   config.json
 Você também pode Exportar/Importar config pelos botões da GUI.
@@ -94,8 +94,8 @@ Test:
 
 
 
-*******************
-5) (Optional) RUN FileKnight directly (script / CLI mode)
+^^^^^^^^^^^^^^^^^^^
+5) (OPTIONAL) RUN FileKnight directly (script / CLI mode)
 > python3 fkrun.py
 
 Optional flags:
@@ -105,8 +105,8 @@ Optional flags:
   --import-config <file.json>
 
 
-*******************
-6) (Optional) CONFIG
+^^^^^^^^^^^^^^^^^^^
+6) (OPTIONAL) CONFIG
 Settings are stored in:
   config.json
 You can also Export/Import config using the GUI buttons.
