@@ -18,11 +18,15 @@ Guia rápido (PT-BR)  |  (PT-BR Quick Guide, English below)
 
 
 
-*******************
-3) (Opcional) RODAR FileKnight direto (modo script / CLI)
+^^^^^^^^^^^^^^^^^^^
+3) (OPCIONAL) RODAR FileKnight direto (modo script / CLI)
 Se você já configurou tudo no config.json e quer rodar sem abrir a janela:
 
-Abra o Terminal (Prompt de Comando ou PowerShell) na pasta "fileknight" e rode:
+Opção A:
+- Dois cliques em "fkrun.py" (ou Abrir como Python)
+
+Opção B:
+Abrir via Terminal (Prompt de Comando ou PowerShell) na pasta "fileknight" e rode:
 > python fkrun.py
 
 Flags opcionais:
@@ -32,8 +36,8 @@ Flags opcionais:
   --import-config <arquivo.json>
 
 
-*******************
-4) (Opcional) Configuração (config.json)
+^^^^^^^^^^^^^^^^^^^
+4) (OPCIONAL) Configuração (config.json)
 As configurações do FileKnight ficam no arquivo:
   config.json
 
@@ -62,10 +66,14 @@ Você pode:
 
 
 
-*******************
-3) (Optional) RUN FileKnight directly (script / CLI mode)
+^^^^^^^^^^^^^^^^^^^
+3) (OPTIONAL) RUN FileKnight directly (script / CLI mode)
 If you already configured everything in config.json and want to run without the GUI:
 
+Option A:
+- Double click "fkrun.py" (or Open as Python)
+
+Option B:
 Open a Terminal (Command Prompt or PowerShell) inside the "fileknight" folder and run:
 > python fkrun.py
 
@@ -76,8 +84,8 @@ Optional flags:
   --import-config <file.json>
 
 
-*******************
-4) (Optional) Configuration (config.json)
+^^^^^^^^^^^^^^^^^^^
+4) (OPTIONAL) Configuration (config.json)
 FileKnight settings are stored in:
   config.json
 
