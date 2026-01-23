@@ -1,14 +1,16 @@
 
 1)
-Com o Terminal na Pasta "fileknight"
+Com o Terminal aberto na pasta "fileknight"
 
-With the Terminal in the "fileknight" folder
+(With Terminal opened inside the "fileknight" folder)
 
 
 2)
-Digite isso no Terminal para Rodar direto o FileKnight com as configurações já configuradas:
+Digite isso no Terminal para rodar o FileKnight diretamente,
+usando as configurações já definidas no arquivo config.json:
 
-Type this into the Terminal to run FileKnight directly with the settings already set:
+(Type this into the terminal to run FileKnight directly,
+using the settings already defined in the config.json file:)
 
 
 3)
