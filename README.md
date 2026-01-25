@@ -12,7 +12,7 @@ Created by @jonathaxs on 2025-12-23.
 Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando como um checkpoint seguro.
 
 
-*Instruções em `readme.txt`*
+*Instruções em `info.txt`*
 
 *Desenvolvido com Python.*
 
@@ -27,6 +27,6 @@ Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando co
 Automates copying folders or files from one location to another, acting as a reliable checkpoint against forgetfulness.
 
 
-*Instructions on `readme.txt`*
+*Instructions on `info.txt`*
 
 *Developed with Python.*
