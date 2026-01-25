@@ -15,7 +15,12 @@ ROOT_DIR = Path(__file__).resolve().parent
 SRC_DIR = ROOT_DIR / "src"
 sys.path.insert(0, str(SRC_DIR))
 
-CONFIG_PATH = ROOT_DIR / "config.json"
+# Config lives one level above the app folder (release root / project root)
+# Dev example: fileknight_project/config.json
+# Release example: <release_root>/config.json (with <release_root>/fileknight/fk.py)
+PARENT_CONFIG_PATH = ROOT_DIR.parent / "config.json"
+LOCAL_CONFIG_PATH = ROOT_DIR / "config.json"  # backward compatibility
+CONFIG_PATH = PARENT_CONFIG_PATH if PARENT_CONFIG_PATH.exists() else LOCAL_CONFIG_PATH
 
 import tkinter as tk
 from tkinter import filedialog, messagebox
