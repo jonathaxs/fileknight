@@ -1,10 +1,10 @@
-Info Linux - Version 1.2.1
+Info Linux - Version 1.3.0
 
 ======================-------------------------------------
 Guia rápido (PT-BR)  |  (PT-BR Quick Guide, English below)
 ======================-------------------------------------
 
-*******************
+
 1) INSTALAR Python em sua Distro
 A maioria das distros já vem com Python 3, confirme se já está instalado pelo Terminal:
 > python3 --version
@@ -16,19 +16,19 @@ Fedora:
 > sudo dnf install python3 && sudo dnf install python3-tkinter
 
 
-**************************************
-3) ABRIR o Terminal na pasta do FileKnight
+
+2) ABRIR o Terminal na pasta do FileKnight
 - Na pasta "fileknight": Clique com botão direito e use "Abrir no Terminal"
 
 
-**************************************
-4) RODAR FileKnight
+
+3) RODAR FileKnight
 > python3 fk.py
 
 
+---------------------------
 
-^^^^^^^^^^^^^^^^^^^
-5) (OPCIONAL) RODAR FileKnight direto (modo script / CLI)
+4) (OPCIONAL) RODAR FileKnight direto (modo script / CLI)
 > python3 fkrun.py
 
 Flags opcionais:
@@ -38,8 +38,8 @@ Flags opcionais:
   --import-config <arquivo.json>
 
 
-^^^^^^^^^^^^^^^^^^^
-6) (OPCIONAL) CONFIG
+
+5) (OPCIONAL) CONFIG
 As configurações ficam em:
   config.json
 Você também pode Exportar/Importar config pelos botões da GUI.
@@ -47,10 +47,10 @@ Você também pode Exportar/Importar config pelos botões da GUI.
 
 
 ======================-------------------------------------
-(ENGLISH) Quick Guide |      (Guia rápido em Inglês)
+(ENGLISH) Quick Guide | (Guia rápido Inglês, PT-BR acima)
 ======================-------------------------------------
 
-*******************
+
 1) INSTALL Python on your distro
 Most distros already include Python 3. Confirm it is installed in the Terminal:
 > python3 --version
@@ -62,19 +62,19 @@ Fedora:
 > sudo dnf install python3 && sudo dnf install python3-tkinter
 
 
-**************************************
-3) OPEN a Terminal in the FileKnight folder
+
+2) OPEN a Terminal in the FileKnight folder
 - In the "fileknight" folder: right-click and select "Open in Terminal"
 
 
-**************************************
-4) RUN FileKnight
+
+3) RUN FileKnight
 > python3 fk.py
 
 
+---------------------------
 
-^^^^^^^^^^^^^^^^^^^
-5) (OPTIONAL) RUN FileKnight directly (script / CLI mode)
+4) (OPTIONAL) RUN FileKnight directly (script / CLI mode)
 > python3 fkrun.py
 
 Optional flags:
@@ -84,8 +84,8 @@ Optional flags:
   --import-config <file.json>
 
 
-^^^^^^^^^^^^^^^^^^^
-6) (OPTIONAL) CONFIG
+
+5) (OPTIONAL) CONFIG
 Settings are stored in:
   config.json
 You can also Export/Import config using the GUI buttons.
