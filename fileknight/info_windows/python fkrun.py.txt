@@ -1,0 +1,21 @@
+
+fkrun.py Opção B:
+
+(fkrun.py Option B:)
+
+1)
+Com o Prompt de Comando ou PowerShell aberto na pasta "fileknight"
+
+(With Command Prompt or PowerShell opened inside the "fileknight" folder)
+
+
+2)
+Digite isso no Terminal para rodar o FileKnight diretamente,
+usando as configurações já definidas no arquivo config.json:
+
+(Type this into the terminal to run FileKnight directly,
+using the settings already defined in the config.json file:)
+
+
+3)
+python fkrun.py
