@@ -1,0 +1,61 @@
+FileKnight Info - Version 1.3.0
+
+===================----------------------
+Informações gerais (PT-BR, English below)
+===================----------------------
+
+IMPORTANTE:
+
+- O arquivo `config.json` DEVE ficar nesta pasta (fileknight_app/).
+- Não mova nem renomeie esse arquivo.
+- Estrutura correta:
+    fileknight_app/
+    │
+    ├── config.json   ← configurações
+    └── fileknight/   ← app
+
+
+COMO USAR:
+
+- As instruções de instalação e uso estão nas pastas:
+  • info_linux
+  • info_mac
+  • info_windows
+- Abra a pasta correspondente ao seu sistema e leia o arquivo `info.txt` dentro dela.
+
+
+NOTAS RÁPIDAS
+
+- `fk.py` abre o FileKnight em janela (recomendado).
+- `fkrun.py` roda direto em modo script pelo terminal.
+
+
+
+===================----------------------
+General Information (EN, Português acima)
+===================----------------------
+
+IMPORTANT:
+
+- The `config.json` file MUST stay in this folder (fileknight_app/).
+- Do not move or rename this file.
+- Correct structure:
+    fileknight_app/
+    │
+    ├── config.json   ← required
+    └── fileknight/   ← app
+
+
+HOW TO USE:
+
+- Installation and usage instructions are located in the folders:
+  • info_linux
+  • info_mac
+  • info_windows
+- Open the folder that matches your operating system and read the `info.txt` inside it.
+
+
+QUICK NOTES:
+
+- `fk.py` opens FileKnight in window mode (recommended).
+- `fkrun.py` runs FileKnight directly in script / terminal mode.
