@@ -1,32 +1,12 @@
-<!-- ⌘
+# FileKnight
 
-/fileknight/README.md
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Work_In_Progress-yellow?style=for-the-badge)
 
-Created by @jonathaxs on 2025-12-23.
-
-⌘ -->
-# 📁⚔️ FileKnight
-
-**Uma simples ferramenta multiplataforma que protege seus arquivos contra o esquecimento.**
-
-Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando como um checkpoint seguro.
-
-
-*Instruções em `info.txt`*
-
-*Desenvolvido com Python.*
-
-
----
-
-
-# (en) FileKnight
+<img align="left" src="git/appicons/fileknight_icon_circle.png" width="100">
 
 **A simple cross-platform tool that protects your files from being lost.**
 
 Automates copying folders or files from one location to another, acting as a reliable checkpoint against forgetfulness.
 
-
 *Instructions on `info.txt`*
-
-*Developed with Python.*
