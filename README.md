@@ -1,9 +1,8 @@
-# 
+![Status](https://img.shields.io/badge/Status-Work_In_Progress-yellow?style=for-the-badge)
 
 <img align="left" src="git/appicons/fileknight_icon_rounded.png" width="100">
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Work_In_Progress-yellow?style=for-the-badge)
 
 # FileKnight
 
