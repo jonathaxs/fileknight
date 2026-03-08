@@ -1,5 +1,5 @@
 # ⌘
-#  /fileknight/fk.py
+#  fileknight/fk.py
 #
 #  Purpose: GUI entry point for FileKnight (Tkinter app to manage config and run backups).
 #
