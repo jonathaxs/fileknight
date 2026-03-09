@@ -1,5 +1,5 @@
 # ⌘
-#  /fileknight/core/backup/copier.py
+#  fileknight/core/backup/copier.py
 #
 #  Purpose: Implements the file/folder copy engine (copy and mirror modes, supports dry-run).
 #

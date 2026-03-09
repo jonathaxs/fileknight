@@ -1,5 +1,5 @@
 # ⌘
-#  /fileknight/src/core/backup/__init__.py
+#  fileknight/src/core/backup/__init__.py
 #
 #  Purpose: Backup package marker (copy/mirror logic).
 #

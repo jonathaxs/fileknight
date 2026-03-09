@@ -1,7 +1,7 @@
 {
   "_meta": {
     "file": "en.json",
-    "path": "/fileknight/core/translations/en.json",
+    "path": "fileknight/core/translations/en.json",
     "purpose": "English UI strings (GUI + CLI).",
     "language": "en(english)",
     "created_by": "@jonathaxs",
