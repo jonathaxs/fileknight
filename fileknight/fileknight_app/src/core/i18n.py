@@ -1,5 +1,5 @@
 # ⌘
-#  /fileknight/core/i18n.py
+#  fileknight/core/i18n.py
 #
 #  Purpose: Loads translations and detects system language (EN/PT-BR).
 #

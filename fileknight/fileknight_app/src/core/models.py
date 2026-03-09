@@ -1,5 +1,5 @@
 # ⌘
-#  /fileknight/core/models.py
+#  fileknight/core/models.py
 #
 #  Purpose: Data models used across the project (e.g., Entry).
 #

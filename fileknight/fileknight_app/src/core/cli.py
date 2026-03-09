@@ -1,5 +1,5 @@
 # ⌘
-#  /fileknight/core/cli.py
+#  fileknight/core/cli.py
 #
 #  Purpose: Defines CLI arguments and parses command-line options for fileknight_run.py.
 #

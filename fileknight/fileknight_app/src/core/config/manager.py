@@ -1,5 +1,5 @@
 # ⌘
-#  /fileknight/core/config/manager.py
+#  fileknight/core/config/manager.py
 #
 #  Purpose: Loads, validates, and updates config data used by GUI and CLI.
 #

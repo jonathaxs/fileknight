@@ -1,5 +1,5 @@
 # ⌘
-#  /fileknight/src/core/config/io.py
+#  fileknight/src/core/config/io.py
 #
 #  Purpose: Handles config.json file IO (create default, export, import).
 #
