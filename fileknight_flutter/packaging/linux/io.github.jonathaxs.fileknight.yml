@@ -1,0 +1,29 @@
+app-id: io.github.jonathaxs.fileknight
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+command: fileknight
+
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  # FileKnight copies files the user chooses, so it needs broad home access.
+  - --filesystem=home
+
+modules:
+  - name: fileknight
+    buildsystem: simple
+    build-commands:
+      # 'bundle' must be the output of `flutter build linux --release`,
+      # copied next to this manifest before building (see packaging/README.md).
+      - mkdir -p /app/lib/fileknight
+      - cp -r bundle/* /app/lib/fileknight/
+      - ln -s /app/lib/fileknight/fileknight /app/bin/fileknight
+      - install -Dm644 io.github.jonathaxs.fileknight.desktop /app/share/applications/io.github.jonathaxs.fileknight.desktop
+      - install -Dm644 io.github.jonathaxs.fileknight.metainfo.xml /app/share/metainfo/io.github.jonathaxs.fileknight.metainfo.xml
+      - install -Dm644 io.github.jonathaxs.fileknight.png /app/share/icons/hicolor/512x512/apps/io.github.jonathaxs.fileknight.png
+    sources:
+      - type: dir
+        path: .

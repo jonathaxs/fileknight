@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.jonathaxs.fileknight</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <!-- TODO: set the real project license once a LICENSE file is added. -->
+  <project_license>MIT</project_license>
+  <name>FileKnight</name>
+  <summary>Protect your files from being lost</summary>
+  <description>
+    <p>
+      FileKnight copies folders or files from one place to another, acting as a
+      reliable checkpoint against forgetfulness. It was built to back up game
+      saves that have no cloud sync, but works for any files.
+    </p>
+  </description>
+  <launchable type="desktop-id">io.github.jonathaxs.fileknight.desktop</launchable>
+  <developer id="io.github.jonathaxs">
+    <name>jonathaxs</name>
+  </developer>
+  <content_rating type="oars-1.1" />
+  <!-- TODO: add <screenshots> before submitting to Flathub. -->
+</component>

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=FileKnight
+Comment=Protect your files from being lost
+Exec=fileknight
+Icon=io.github.jonathaxs.fileknight
+Terminal=false
+Categories=Utility;Archiving;
