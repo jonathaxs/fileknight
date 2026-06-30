@@ -64,6 +64,8 @@ class HomeScreen extends StatelessWidget {
                   _exportConfig(context);
                 case 'import':
                   _importConfig(context);
+                case 'log':
+                  _showLogDialog(context);
               }
             },
             itemBuilder: (context) => [
@@ -81,6 +83,11 @@ class HomeScreen extends StatelessWidget {
                 value: 'import',
                 child: _menuRow(
                     Icons.download_outlined, controller.tr('import_config')),
+              ),
+              PopupMenuItem(
+                value: 'log',
+                child: _menuRow(
+                    Icons.receipt_long_outlined, controller.tr('menu_log')),
               ),
             ],
           ),
@@ -220,38 +227,35 @@ class HomeScreen extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  children: [
-                    _modeChip(context, entry.mode),
-                    const SizedBox(width: 6),
-                    Flexible(child: _statusChip(context, entry)),
-                  ],
-                ),
+                if (running)
+                  _progressRow(context, entry.name)
+                else
+                  Row(
+                    children: [
+                      _modeChip(context, entry.mode),
+                      const SizedBox(width: 6),
+                      Flexible(
+                        child: controller.errorFor(entry.name) != null
+                            ? _errorChip(context, entry.name)
+                            : _statusChip(context, entry),
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),
           const SizedBox(width: 8),
-          if (running)
-            const SizedBox(
-              width: 40,
-              height: 40,
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: CircularProgressIndicator(strokeWidth: 2),
-              ),
-            )
-          else
-            IconButton(
-              tooltip: controller.tr('run_backup'),
-              onPressed: () => _runOne(context, entry),
-              icon: const Icon(Icons.play_arrow_rounded),
-            ),
+          IconButton(
+            tooltip: controller.tr('run_backup'),
+            onPressed: running ? null : () => _runOne(context, entry),
+            icon: const Icon(Icons.play_arrow_rounded),
+          ),
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'edit') {
                 _showEntryDialog(context, entry: entry);
               } else if (value == 'remove') {
-                controller.removeEntry(entry.name);
+                _confirmRemove(context, entry);
               }
             },
             itemBuilder: (context) => [
@@ -363,6 +367,31 @@ class HomeScreen extends StatelessWidget {
   }
 
   Future<void> _runAll(BuildContext context) async {
+    if (!controller.config.dryRun) {
+      final hasMirror = controller.config
+          .validEntries()
+          .any((e) => e.mode == BackupMode.mirror);
+      if (hasMirror) {
+        final confirmed = await showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(controller.tr('confirm_title')),
+            content: Text(controller.tr('confirm_mirror_body')),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text(controller.tr('btn_cancel')),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: Text(controller.tr('btn_continue')),
+              ),
+            ],
+          ),
+        );
+        if (confirmed != true) return;
+      }
+    }
     final message = await controller.runAll();
     if (!context.mounted) return;
     ScaffoldMessenger.of(context)
@@ -544,5 +573,82 @@ class HomeScreen extends StatelessWidget {
         mode: mode,
       );
     }
+  }
+
+  Widget _progressRow(BuildContext context, String name) {
+    final progress = controller.progressFor(name);
+    final percent = progress == null ? '' : '${(progress * 100).round()}%';
+    return Row(
+      children: [
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: LinearProgressIndicator(value: progress, minHeight: 6),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Text(percent, style: Theme.of(context).textTheme.labelSmall),
+      ],
+    );
+  }
+
+  Widget _errorChip(BuildContext context, String name) {
+    final cs = Theme.of(context).colorScheme;
+    return Tooltip(
+      message: controller.errorFor(name) ?? '',
+      child: _pill(controller.tr('status_failed'), cs.errorContainer,
+          cs.onErrorContainer,
+          icon: Icons.error_outline),
+    );
+  }
+
+  Future<void> _confirmRemove(BuildContext context, Entry entry) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(controller.tr('confirm_remove_title')),
+        content: Text(
+            controller.tr('confirm_remove_body').replaceAll('{name}', entry.name)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(controller.tr('btn_cancel')),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(controller.tr('btn_remove')),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await controller.removeEntry(entry.name);
+    }
+  }
+
+  Future<void> _showLogDialog(BuildContext context) async {
+    final content = await controller.readLog();
+    if (!context.mounted) return;
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(controller.tr('log_title')),
+        content: SizedBox(
+          width: 480,
+          child: SingleChildScrollView(
+            child: Text(
+              content.isEmpty ? controller.tr('log_empty') : content,
+              style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(controller.tr('btn_close')),
+          ),
+        ],
+      ),
+    );
   }
 }

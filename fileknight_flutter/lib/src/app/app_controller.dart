@@ -21,10 +21,15 @@ class AppController extends ChangeNotifier {
   bool loading = true;
 
   File? _configFile;
+  File? _logFile;
   final Set<String> _running = <String>{};
+  final Map<String, double> _progress = <String, double>{};
+  final Map<String, String> _errors = <String, String>{};
 
   bool isRunning(String name) => _running.contains(name);
   bool get isBusy => _running.isNotEmpty;
+  double? progressFor(String name) => _progress[name];
+  String? errorFor(String name) => _errors[name];
 
   /// Localized string for [key].
   String tr(String key) => translate(strings, key);
@@ -32,9 +37,9 @@ class AppController extends ChangeNotifier {
   /// Load the config from disk, creating a default one on first run.
   Future<void> load() async {
     final dir = await getApplicationSupportDirectory();
-    final file = File(p.join(dir.path, 'config.json'));
-    _configFile = file;
-    config = await ConfigStore.ensureExists(file);
+    _configFile = File(p.join(dir.path, 'config.json'));
+    _logFile = File(p.join(dir.path, 'fileknight.log'));
+    config = await ConfigStore.ensureExists(_configFile!);
     _refreshStrings();
     loading = false;
     notifyListeners();
@@ -66,6 +71,13 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setLanguage(String code) async {
+    config.language = code;
+    _refreshStrings();
+    await _save();
+    notifyListeners();
+  }
+
   Future<void> addOrUpdateEntry({
     required String name,
     required String source,
@@ -78,13 +90,7 @@ class AppController extends ChangeNotifier {
 
   Future<void> removeEntry(String name) async {
     config.removeEntry(name);
-    await _save();
-    notifyListeners();
-  }
-
-  Future<void> setLanguage(String code) async {
-    config.language = code;
-    _refreshStrings();
+    _errors.remove(name);
     await _save();
     notifyListeners();
   }
@@ -112,22 +118,27 @@ class AppController extends ChangeNotifier {
     if (config.destinationRoot.trim().isEmpty) {
       return tr('no_destination');
     }
+    _errors.remove(entry.name);
+    _progress[entry.name] = 0;
     _running.add(entry.name);
     notifyListeners();
     try {
-      final destination = Directory(expandUserAndVars(config.destinationRoot));
-      await BackupCopier.copyEntry(entry, destination, dryRun: config.dryRun);
+      await _copy(entry);
       if (!config.dryRun) {
         _markBackedUp(entry.name);
         await _save();
       }
+      await _appendLog(entry, success: true, error: null);
       return config.dryRun
           ? tr('done_dry')
           : tr('backup_done').replaceAll('{name}', entry.name);
-    } catch (_) {
+    } catch (error) {
+      _errors[entry.name] = error.toString();
+      await _appendLog(entry, success: false, error: error.toString());
       return tr('backup_failed').replaceAll('{name}', entry.name);
     } finally {
       _running.remove(entry.name);
+      _progress.remove(entry.name);
       notifyListeners();
     }
   }
@@ -138,23 +149,30 @@ class AppController extends ChangeNotifier {
       return tr('no_destination');
     }
     final entries = config.validEntries();
+    for (final entry in entries) {
+      _errors.remove(entry.name);
+      _progress[entry.name] = 0;
+    }
     _running.addAll(entries.map((e) => e.name));
     notifyListeners();
 
-    final destination = Directory(expandUserAndVars(config.destinationRoot));
     var ok = 0;
     var fail = 0;
     for (final entry in entries) {
       try {
-        await BackupCopier.copyEntry(entry, destination, dryRun: config.dryRun);
+        await _copy(entry);
         if (!config.dryRun) {
           _markBackedUp(entry.name);
         }
+        await _appendLog(entry, success: true, error: null);
         ok++;
-      } catch (_) {
+      } catch (error) {
+        _errors[entry.name] = error.toString();
+        await _appendLog(entry, success: false, error: error.toString());
         fail++;
       } finally {
         _running.remove(entry.name);
+        _progress.remove(entry.name);
         notifyListeners();
       }
     }
@@ -166,11 +184,58 @@ class AppController extends ChangeNotifier {
         .replaceAll('{fail}', '$fail');
   }
 
+  // Runs the copy for [entry], pushing throttled progress updates to the UI.
+  Future<void> _copy(Entry entry) async {
+    final destination = Directory(expandUserAndVars(config.destinationRoot));
+    var lastPercent = -1;
+    await BackupCopier.copyEntry(
+      entry,
+      destination,
+      dryRun: config.dryRun,
+      onProgress: (done, total) {
+        final percent = total == 0 ? 100 : (done * 100 ~/ total);
+        _progress[entry.name] = percent / 100;
+        if (percent != lastPercent) {
+          lastPercent = percent;
+          notifyListeners();
+        }
+      },
+    );
+  }
+
   void _markBackedUp(String name) {
     final index = config.entries.indexWhere((e) => e.name == name);
     if (index >= 0) {
       config.entries[index] =
           config.entries[index].copyWith(lastBackup: DateTime.now());
     }
+  }
+
+  Future<void> _appendLog(Entry entry,
+      {required bool success, String? error}) async {
+    final file = _logFile;
+    if (file == null) return;
+    final stamp = DateTime.now().toIso8601String();
+    final mode = config.dryRun ? 'dry-run' : entry.mode.name;
+    final status = success ? 'OK' : 'FAIL';
+    final detail = error == null ? '' : ' — $error';
+    try {
+      await file.writeAsString(
+        '[$stamp] $status  ${entry.name} ($mode)$detail\n',
+        mode: FileMode.append,
+      );
+    } catch (_) {
+      // A failing log must never break a backup.
+    }
+  }
+
+  /// Recent log lines, newest first (capped). Empty when there is no log yet.
+  Future<String> readLog() async {
+    final file = _logFile;
+    if (file == null || !await file.exists()) return '';
+    final lines = await file.readAsLines();
+    final tail =
+        lines.length > 100 ? lines.sublist(lines.length - 100) : lines;
+    return tail.reversed.join('\n');
   }
 }

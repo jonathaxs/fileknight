@@ -84,6 +84,16 @@ const Map<String, String> _en = {
   'menu_settings': 'Settings',
   'language_label': 'Language',
   'language_auto': 'Automatic (system)',
+  'status_failed': 'Failed',
+  'confirm_title': 'Confirm backup',
+  'confirm_mirror_body': 'Mirror entries replace their backup exactly, deleting files no longer in the source. Continue?',
+  'btn_continue': 'Continue',
+  'btn_close': 'Close',
+  'confirm_remove_title': 'Remove entry?',
+  'confirm_remove_body': 'This removes "{name}" from the list. Files already backed up are not deleted.',
+  'menu_log': 'View log',
+  'log_title': 'Backup log',
+  'log_empty': 'No backups yet.',
 };
 
 const Map<String, String> _ptBr = {
@@ -145,4 +155,14 @@ const Map<String, String> _ptBr = {
   'menu_settings': 'Configurações',
   'language_label': 'Idioma',
   'language_auto': 'Automático (sistema)',
+  'status_failed': 'Falhou',
+  'confirm_title': 'Confirmar backup',
+  'confirm_mirror_body': 'Entradas em modo Espelho substituem o backup exatamente, apagando arquivos que não existem mais na origem. Continuar?',
+  'btn_continue': 'Continuar',
+  'btn_close': 'Fechar',
+  'confirm_remove_title': 'Remover entrada?',
+  'confirm_remove_body': 'Isso remove "{name}" da lista. Os arquivos já copiados não são apagados.',
+  'menu_log': 'Ver registro',
+  'log_title': 'Registro de backups',
+  'log_empty': 'Nenhum backup ainda.',
 };

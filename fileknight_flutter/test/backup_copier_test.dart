@@ -94,4 +94,27 @@ void main() {
     );
     expect(File('${mirrored.path}/a.txt').existsSync(), true);
   });
+
+  test('reports progress up to the total file count', () async {
+    final src = Directory('${tmp.path}/src')..createSync();
+    File('${src.path}/a.txt').writeAsStringSync('A');
+    File('${src.path}/b.txt').writeAsStringSync('B');
+    final dest = Directory('${tmp.path}/dest');
+    final entry = Entry(name: 'Folder', source: src.path, mode: BackupMode.copy);
+
+    var lastDone = -1;
+    var lastTotal = -1;
+    await BackupCopier.copyEntry(
+      entry,
+      dest,
+      dryRun: false,
+      onProgress: (done, total) {
+        lastDone = done;
+        lastTotal = total;
+      },
+    );
+
+    expect(lastTotal, 2);
+    expect(lastDone, 2);
+  });
 }

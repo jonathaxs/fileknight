@@ -3,6 +3,8 @@
 // Mirror mode for directories is crash-safe: the new copy is fully staged next
 // to the target before the old backup is touched, so an interrupted run never
 // destroys a valid backup. Single files are written via a temp-then-rename swap.
+//
+// An optional progress callback reports how many files have been copied so far.
 
 import 'dart:io';
 
@@ -10,6 +12,9 @@ import 'package:path/path.dart' as p;
 
 import '../models/entry.dart';
 import 'path_utils.dart';
+
+/// Reports progress as (filesCopied, totalFiles).
+typedef ProgressCallback = void Function(int done, int total);
 
 class BackupCopier {
   /// Copy [entry] into `destinationRoot/<entry.name>/<source_name>`.
@@ -20,6 +25,7 @@ class BackupCopier {
     Entry entry,
     Directory destinationRoot, {
     required bool dryRun,
+    ProgressCallback? onProgress,
   }) async {
     final sourcePath = expandUserAndVars(entry.source);
     final sourceType = FileSystemEntity.typeSync(sourcePath, followLinks: true);
@@ -37,22 +43,41 @@ class BackupCopier {
     await destinationDir.create(recursive: true);
 
     if (sourceType == FileSystemEntityType.directory) {
-      if (entry.mode == BackupMode.mirror) {
-        await _mirrorDirectory(
-            Directory(sourcePath), Directory(destinationItem));
-      } else {
-        await _mergeDirectory(Directory(sourcePath), Directory(destinationItem));
+      final source = Directory(sourcePath);
+      final total = await _countFiles(source);
+      var done = 0;
+      void onFile() {
+        done++;
+        onProgress?.call(done, total);
       }
+
+      onProgress?.call(0, total);
+      if (entry.mode == BackupMode.mirror) {
+        await _mirrorDirectory(source, Directory(destinationItem), onFile);
+      } else {
+        await _mergeDirectory(source, Directory(destinationItem), onFile);
+      }
+      onProgress?.call(total, total);
     } else {
+      onProgress?.call(0, 1);
       await _copyFileAtomic(File(sourcePath), File(destinationItem));
+      onProgress?.call(1, 1);
     }
 
     return destinationItem;
   }
 
+  static Future<int> _countFiles(Directory source) async {
+    var count = 0;
+    await for (final entity in source.list(recursive: true, followLinks: false)) {
+      if (entity is File) count++;
+    }
+    return count;
+  }
+
   // Mirror = exact replica. Stage a fresh copy, then swap it in atomically.
   static Future<void> _mirrorDirectory(
-      Directory source, Directory target) async {
+      Directory source, Directory target, void Function() onFile) async {
     final parent = target.parent;
     await parent.create(recursive: true);
 
@@ -60,7 +85,7 @@ class BackupCopier {
     final previous = Directory(p.join(parent.path, _scratchName('old')));
 
     try {
-      await _copyDirectory(source, staging);
+      await _copyDirectory(source, staging, onFile);
 
       if (await target.exists()) {
         await target.rename(previous.path);
@@ -84,7 +109,7 @@ class BackupCopier {
 
   // Copy = additive merge. Overwrite/add files, keep files already in target.
   static Future<void> _mergeDirectory(
-      Directory source, Directory target) async {
+      Directory source, Directory target, void Function() onFile) async {
     await target.create(recursive: true);
     await for (final entity in source.list(recursive: true, followLinks: false)) {
       final relative = p.relative(entity.path, from: source.path);
@@ -94,18 +119,21 @@ class BackupCopier {
       } else if (entity is File) {
         await Directory(p.dirname(targetPath)).create(recursive: true);
         await entity.copy(targetPath);
+        onFile();
       }
     }
   }
 
-  static Future<void> _copyDirectory(Directory source, Directory target) async {
+  static Future<void> _copyDirectory(
+      Directory source, Directory target, void Function() onFile) async {
     await target.create(recursive: true);
     await for (final entity in source.list(recursive: false, followLinks: false)) {
       final targetPath = p.join(target.path, p.basename(entity.path));
       if (entity is Directory) {
-        await _copyDirectory(entity, Directory(targetPath));
+        await _copyDirectory(entity, Directory(targetPath), onFile);
       } else if (entity is File) {
         await entity.copy(targetPath);
+        onFile();
       }
     }
   }
