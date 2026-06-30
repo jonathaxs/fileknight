@@ -82,6 +82,31 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setLanguage(String code) async {
+    config.language = code;
+    _refreshStrings();
+    await _save();
+    notifyListeners();
+  }
+
+  /// Export the current config into [directoryPath]. Returns the new file path.
+  Future<String> exportConfig(String directoryPath) async {
+    final file = _configFile;
+    if (file == null) return '';
+    final exported = await ConfigStore.export(file, Directory(directoryPath));
+    return exported.path;
+  }
+
+  /// Replace the current config with [filePath] and reload it.
+  Future<void> importConfig(String filePath) async {
+    final file = _configFile;
+    if (file == null) return;
+    await ConfigStore.import(File(filePath), file);
+    config = await ConfigStore.read(file);
+    _refreshStrings();
+    notifyListeners();
+  }
+
   /// Back up a single entry. Returns a localized result message.
   Future<String> runEntry(Entry entry) async {
     if (config.destinationRoot.trim().isEmpty) {

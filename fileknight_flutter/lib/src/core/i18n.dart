@@ -81,6 +81,9 @@ const Map<String, String> _en = {
   'time_hour': '{n} h ago',
   'time_yesterday': 'yesterday',
   'time_day': '{n} d ago',
+  'menu_settings': 'Settings',
+  'language_label': 'Language',
+  'language_auto': 'Automatic (system)',
 };
 
 const Map<String, String> _ptBr = {
@@ -139,4 +142,7 @@ const Map<String, String> _ptBr = {
   'time_hour': 'há {n} h',
   'time_yesterday': 'ontem',
   'time_day': 'há {n} d',
+  'menu_settings': 'Configurações',
+  'language_label': 'Idioma',
+  'language_auto': 'Automático (sistema)',
 };

@@ -1,5 +1,6 @@
 // Main screen: destination, entry cards, dry-run switch and backup actions.
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../models/entry.dart';
@@ -53,6 +54,35 @@ class HomeScreen extends StatelessWidget {
             onChanged: (value) {
               controller.setDryRun(value);
             },
+          ),
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              switch (value) {
+                case 'settings':
+                  _showSettingsDialog(context);
+                case 'export':
+                  _exportConfig(context);
+                case 'import':
+                  _importConfig(context);
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'settings',
+                child:
+                    _menuRow(Icons.settings_outlined, controller.tr('menu_settings')),
+              ),
+              PopupMenuItem(
+                value: 'export',
+                child:
+                    _menuRow(Icons.upload_outlined, controller.tr('export_config')),
+              ),
+              PopupMenuItem(
+                value: 'import',
+                child: _menuRow(
+                    Icons.download_outlined, controller.tr('import_config')),
+              ),
+            ],
           ),
           const SizedBox(width: 8),
         ],
@@ -131,7 +161,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           OutlinedButton(
-            onPressed: () => _showDestinationDialog(context),
+            onPressed: () => _pickDestination(context),
             child: Text(controller.tr('btn_change')),
           ),
         ],
@@ -346,36 +376,83 @@ class HomeScreen extends StatelessWidget {
         .showSnackBar(SnackBar(content: Text(message)));
   }
 
-  Future<void> _showDestinationDialog(BuildContext context) async {
-    final field =
-        TextEditingController(text: controller.config.destinationRoot);
-    final result = await showDialog<String>(
+  Future<void> _pickDestination(BuildContext context) async {
+    final path = await FilePicker.getDirectoryPath();
+    if (path != null) {
+      await controller.setDestination(path);
+    }
+  }
+
+  Widget _menuRow(IconData icon, String label) {
+    return Row(
+      children: [
+        Icon(icon, size: 18),
+        const SizedBox(width: 12),
+        Text(label),
+      ],
+    );
+  }
+
+  Future<void> _exportConfig(BuildContext context) async {
+    final directory = await FilePicker.getDirectoryPath();
+    if (directory == null) return;
+    final path = await controller.exportConfig(directory);
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(controller.tr('msg_export_body').replaceAll('{path}', path)),
+      ),
+    );
+  }
+
+  Future<void> _importConfig(BuildContext context) async {
+    final result = await FilePicker.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['json'],
+    );
+    final path = result?.files.single.path;
+    if (path == null) return;
+    await controller.importConfig(path);
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(controller.tr('msg_import_body'))),
+    );
+  }
+
+  Future<void> _showSettingsDialog(BuildContext context) async {
+    final selected = await showDialog<String>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(controller.tr('dialog_change_destination')),
-        content: TextField(
-          controller: field,
-          autofocus: true,
-          decoration: InputDecoration(
-            labelText: controller.tr('field_destination'),
-            hintText: '~/Backups/FileKnight',
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(controller.tr('btn_cancel')),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, field.text),
-            child: Text(controller.tr('btn_save')),
-          ),
+      builder: (context) => SimpleDialog(
+        title: Text(controller.tr('language_label')),
+        children: [
+          _langOption(context, 'auto', controller.tr('language_auto')),
+          _langOption(context, 'en', 'English'),
+          _langOption(context, 'pt-BR', 'Português (Brasil)'),
         ],
       ),
     );
-    if (result != null) {
-      await controller.setDestination(result);
+    if (selected != null) {
+      await controller.setLanguage(selected);
     }
+  }
+
+  Widget _langOption(BuildContext context, String code, String label) {
+    final selected = controller.config.language == code;
+    return SimpleDialogOption(
+      onPressed: () => Navigator.pop(context, code),
+      child: Row(
+        children: [
+          Icon(
+            selected
+                ? Icons.radio_button_checked
+                : Icons.radio_button_unchecked,
+            size: 18,
+          ),
+          const SizedBox(width: 12),
+          Text(label),
+        ],
+      ),
+    );
   }
 
   Future<void> _showEntryDialog(BuildContext context, {Entry? entry}) async {
@@ -404,6 +481,29 @@ class HomeScreen extends StatelessWidget {
                   labelText: controller.tr('field_source'),
                   hintText: '~/Library/...',
                 ),
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  OutlinedButton.icon(
+                    onPressed: () async {
+                      final result = await FilePicker.pickFiles();
+                      final path = result?.files.single.path;
+                      if (path != null) sourceField.text = path;
+                    },
+                    icon: const Icon(Icons.insert_drive_file_outlined, size: 16),
+                    label: Text(controller.tr('btn_file')),
+                  ),
+                  const SizedBox(width: 8),
+                  OutlinedButton.icon(
+                    onPressed: () async {
+                      final path = await FilePicker.getDirectoryPath();
+                      if (path != null) sourceField.text = path;
+                    },
+                    icon: const Icon(Icons.folder_outlined, size: 16),
+                    label: Text(controller.tr('btn_folder')),
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
               SegmentedButton<BackupMode>(
