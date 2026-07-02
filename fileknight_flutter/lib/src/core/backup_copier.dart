@@ -1,10 +1,11 @@
-// Backup engine: copies a single entry into the destination.
+// Motor de backup: copia uma entrada para o destino.
 //
-// Mirror mode for directories is crash-safe: the new copy is fully staged next
-// to the target before the old backup is touched, so an interrupted run never
-// destroys a valid backup. Single files are written via a temp-then-rename swap.
+// O modo espelho (mirror) em pastas é à prova de falhas: a cópia nova é montada
+// por completo ao lado do alvo antes de o backup antigo ser tocado — assim uma
+// execução interrompida nunca destrói um backup válido. Arquivos únicos são
+// gravados via temporário + rename.
 //
-// An optional progress callback reports how many files have been copied so far.
+// Um callback opcional de progresso informa quantos arquivos já foram copiados.
 
 import 'dart:io';
 
@@ -13,14 +14,14 @@ import 'package:path/path.dart' as p;
 import '../models/entry.dart';
 import 'path_utils.dart';
 
-/// Reports progress as (filesCopied, totalFiles).
+/// Reporta o progresso como (arquivosCopiados, totalDeArquivos).
 typedef ProgressCallback = void Function(int done, int total);
 
 class BackupCopier {
-  /// Copy [entry] into `destinationRoot/<entry.name>/<source_name>`.
+  /// Copia a [entry] para `destinationRoot/<entry.name>/<source_name>`.
   ///
-  /// Returns the final destination path. With [dryRun] true, nothing is written
-  /// and only the path that *would* be used is returned.
+  /// Retorna o caminho final de destino. Com [dryRun] true, nada é gravado e
+  /// apenas o caminho que *seria* usado é retornado.
   static Future<String> copyEntry(
     Entry entry,
     Directory destinationRoot, {
@@ -75,7 +76,7 @@ class BackupCopier {
     return count;
   }
 
-  // Mirror = exact replica. Stage a fresh copy, then swap it in atomically.
+  // Espelho = réplica exata. Monta uma cópia nova e faz a troca de forma atômica.
   static Future<void> _mirrorDirectory(
       Directory source, Directory target, void Function() onFile) async {
     final parent = target.parent;
@@ -92,7 +93,7 @@ class BackupCopier {
         try {
           await staging.rename(target.path);
         } catch (_) {
-          // Swap failed: restore the previous backup before giving up.
+          // A troca falhou: restaura o backup anterior antes de desistir.
           await previous.rename(target.path);
           rethrow;
         }
@@ -107,7 +108,7 @@ class BackupCopier {
     }
   }
 
-  // Copy = additive merge. Overwrite/add files, keep files already in target.
+  // Cópia = mesclagem aditiva. Sobrescreve/adiciona arquivos e mantém os que já existem no destino.
   static Future<void> _mergeDirectory(
       Directory source, Directory target, void Function() onFile) async {
     await target.create(recursive: true);
@@ -154,7 +155,7 @@ class BackupCopier {
 
   static int _counter = 0;
 
-  // Unique, hidden scratch name living next to the target (same filesystem).
+  // Nome de rascunho único e oculto, vizinho do alvo (mesmo sistema de arquivos).
   static String _scratchName(String kind) =>
       '.fk-$kind-${DateTime.now().microsecondsSinceEpoch}-${_counter++}';
 }

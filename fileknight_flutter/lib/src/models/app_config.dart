@@ -1,7 +1,8 @@
-// AppConfig model: the whole config.json contents.
+// Modelo AppConfig: o conteúdo completo do config.json.
 //
-// Mirrors the Python config (language, dry_run, destination_root, entries) and
-// preserves the optional "_meta" block so it round-trips without data loss.
+// Espelha o config da versão Python (language, dry_run, destination_root,
+// entries) e preserva o bloco opcional "_meta" para não perder dados no
+// ciclo de ler → salvar.
 
 import 'entry.dart';
 
@@ -41,7 +42,7 @@ class AppConfig {
     );
   }
 
-  // _meta is written first to match the layout of the existing config.json.
+  // O _meta é escrito primeiro para manter o layout do config.json existente.
   Map<String, dynamic> toJson() => {
         if (meta != null) '_meta': meta,
         'language': language,
@@ -63,13 +64,13 @@ class AppConfig {
         ],
       );
 
-  /// Entries that are safe to back up: both name and source must be non-empty.
+  /// Entradas seguras para backup: nome e origem precisam estar preenchidos.
   List<Entry> validEntries() => entries
       .where((e) => e.name.trim().isNotEmpty && e.source.trim().isNotEmpty)
       .toList();
 
-  /// Add a new entry, or update an existing one matched by name.
-  /// When updating, the existing [Entry.lastBackup] is preserved.
+  /// Adiciona uma entrada nova, ou atualiza a existente com o mesmo nome.
+  /// Ao atualizar, o [Entry.lastBackup] existente é preservado.
   void addOrUpdateEntry({
     required String name,
     required String source,
@@ -85,7 +86,7 @@ class AppConfig {
     }
   }
 
-  /// Remove an entry by name. Returns true when something was removed.
+  /// Remove uma entrada pelo nome. Retorna true quando algo foi removido.
   bool removeEntry(String name) {
     final trimmedName = name.trim();
     final before = entries.length;

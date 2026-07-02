@@ -9,15 +9,15 @@ finish-args:
   - --socket=wayland
   - --socket=fallback-x11
   - --device=dri
-  # FileKnight copies files the user chooses, so it needs broad home access.
+  # O FileKnight copia arquivos que o usuário escolher, então precisa de acesso amplo ao home.
   - --filesystem=home
 
 modules:
   - name: fileknight
     buildsystem: simple
     build-commands:
-      # 'bundle' must be the output of `flutter build linux --release`,
-      # copied next to this manifest before building (see packaging/README.md).
+      # 'bundle' deve ser a saída de `flutter build linux --release`,
+      # copiada para o lado deste manifesto antes do build (ver packaging/README.md).
       - mkdir -p /app/lib/fileknight
       - cp -r bundle/* /app/lib/fileknight/
       - ln -s /app/lib/fileknight/fileknight /app/bin/fileknight

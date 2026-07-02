@@ -1,6 +1,6 @@
-// App state and orchestration: loads/saves the config and drives the core.
+// Estado e orquestração do app: carrega/salva o config e aciona o core.
 //
-// Kept as a ChangeNotifier so the UI rebuilds on changes without extra packages.
+// É um ChangeNotifier para a UI se reconstruir nas mudanças sem pacotes extras.
 
 import 'dart:io';
 
@@ -31,10 +31,10 @@ class AppController extends ChangeNotifier {
   double? progressFor(String name) => _progress[name];
   String? errorFor(String name) => _errors[name];
 
-  /// Localized string for [key].
+  /// String localizada para [key].
   String tr(String key) => translate(strings, key);
 
-  /// Load the config from disk, creating a default one on first run.
+  /// Carrega o config do disco, criando um padrão na primeira execução.
   Future<void> load() async {
     final dir = await getApplicationSupportDirectory();
     _configFile = File(p.join(dir.path, 'config.json'));
@@ -95,7 +95,7 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Export the current config into [directoryPath]. Returns the new file path.
+  /// Exporta o config atual para [directoryPath]. Retorna o caminho do novo arquivo.
   Future<String> exportConfig(String directoryPath) async {
     final file = _configFile;
     if (file == null) return '';
@@ -103,7 +103,7 @@ class AppController extends ChangeNotifier {
     return exported.path;
   }
 
-  /// Replace the current config with [filePath] and reload it.
+  /// Substitui o config atual pelo arquivo em [filePath] e o recarrega.
   Future<void> importConfig(String filePath) async {
     final file = _configFile;
     if (file == null) return;
@@ -113,7 +113,7 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Back up a single entry. Returns a localized result message.
+  /// Faz backup de uma única entrada. Retorna uma mensagem de resultado localizada.
   Future<String> runEntry(Entry entry) async {
     if (config.destinationRoot.trim().isEmpty) {
       return tr('no_destination');
@@ -143,7 +143,7 @@ class AppController extends ChangeNotifier {
     }
   }
 
-  /// Back up every valid entry. Returns a localized summary.
+  /// Faz backup de todas as entradas válidas. Retorna um resumo localizado.
   Future<String> runAll() async {
     if (config.destinationRoot.trim().isEmpty) {
       return tr('no_destination');
@@ -184,7 +184,7 @@ class AppController extends ChangeNotifier {
         .replaceAll('{fail}', '$fail');
   }
 
-  // Runs the copy for [entry], pushing throttled progress updates to the UI.
+  // Executa a cópia da [entry], enviando à UI atualizações de progresso com limite de frequência.
   Future<void> _copy(Entry entry) async {
     final destination = Directory(expandUserAndVars(config.destinationRoot));
     var lastPercent = -1;
@@ -225,11 +225,11 @@ class AppController extends ChangeNotifier {
         mode: FileMode.append,
       );
     } catch (_) {
-      // A failing log must never break a backup.
+      // Falha no log nunca pode quebrar um backup.
     }
   }
 
-  /// Recent log lines, newest first (capped). Empty when there is no log yet.
+  /// Linhas recentes do log, mais novas primeiro (com limite). Vazio se ainda não há log.
   Future<String> readLog() async {
     final file = _logFile;
     if (file == null || !await file.exists()) return '';

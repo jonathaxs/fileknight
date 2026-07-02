@@ -1,15 +1,15 @@
-// Cross-platform path expansion (~ and environment variables).
+// Expansão de caminhos multiplataforma (~ e variáveis de ambiente).
 
 import 'dart:io';
 
-/// The user's home directory, or null when it cannot be determined.
+/// O diretório home do usuário, ou null quando não dá para determinar.
 String? homeDirectory() =>
     Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'];
 
-/// Expand `~`, `$VAR`, `${VAR}` and `%VAR%` in a raw path string.
+/// Expande `~`, `$VAR`, `${VAR}` e `%VAR%` em um caminho cru.
 ///
-/// Unknown variables are left untouched. Expansion order matches the Python
-/// version: environment variables first, then a leading `~`.
+/// Variáveis desconhecidas ficam como estão. A ordem de expansão segue a
+/// versão Python: variáveis de ambiente primeiro, depois o `~` inicial.
 String expandUserAndVars(String raw) {
   var result = raw;
 

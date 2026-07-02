@@ -1,4 +1,4 @@
-// Config file IO: read, write, create-default, export and import.
+// IO do arquivo de config: ler, gravar, criar padrão, exportar e importar.
 
 import 'dart:convert';
 import 'dart:io';
@@ -23,7 +23,7 @@ class ConfigStore {
     await file.writeAsString('${encoder.convert(config.toJson())}\n');
   }
 
-  /// Read the config, creating a default one if the file does not exist yet.
+  /// Lê o config, criando um padrão se o arquivo ainda não existir.
   static Future<AppConfig> ensureExists(File file) async {
     if (await file.exists()) {
       return read(file);
@@ -38,7 +38,7 @@ class ConfigStore {
     return config;
   }
 
-  /// Export a timestamped copy of the config file into [exportDir].
+  /// Exporta uma cópia do config com carimbo de data/hora para [exportDir].
   static Future<File> export(File configFile, Directory exportDir) async {
     await exportDir.create(recursive: true);
     final target =
@@ -46,7 +46,7 @@ class ConfigStore {
     return configFile.copy(target.path);
   }
 
-  /// Import a .json file, replacing the current config file.
+  /// Importa um arquivo .json, substituindo o config atual.
   static Future<void> import(File sourceJson, File configFile) async {
     if (!await sourceJson.exists()) {
       throw FileSystemException('Import source does not exist', sourceJson.path);

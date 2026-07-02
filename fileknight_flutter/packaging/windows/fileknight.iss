@@ -1,6 +1,6 @@
-; Inno Setup script for FileKnight (Windows installer).
-; Build the app first: flutter build windows --release
-; Then compile this script with Inno Setup (https://jrsoftware.org/isinfo.php).
+; Script Inno Setup do FileKnight (instalador Windows).
+; Primeiro compile o app: flutter build windows --release
+; Depois compile este script com o Inno Setup (https://jrsoftware.org/isinfo.php).
 
 #define AppVersion "1.0.0"
 

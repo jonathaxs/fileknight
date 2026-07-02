@@ -1,16 +1,16 @@
-// Entry model: a single backup item.
+// Modelo Entry: um item de backup.
 //
-// Holds the logical name, the raw source path (as stored in config), the copy
-// mode, and an optional timestamp of the last successful backup (used later for
-// the "protected" status shown in the UI).
+// Guarda o nome lógico, o caminho de origem cru (como está no config), o modo
+// de cópia e, opcionalmente, a data/hora do último backup bem-sucedido (usada
+// pelo status "Protegido" na interface).
 
-/// How an entry is copied into the destination.
+/// Como a entrada é copiada para o destino.
 ///
-/// - [mirror]: the destination becomes an exact replica of the source.
-/// - [copy]: files are added/overwritten, but existing extra files are kept.
+/// - [mirror]: o destino vira uma réplica exata da origem.
+/// - [copy]: arquivos são adicionados/sobrescritos, mas os extras já existentes são mantidos.
 enum BackupMode { mirror, copy }
 
-/// Parse a mode coming from JSON. Anything unknown falls back to [BackupMode.mirror].
+/// Converte um modo vindo do JSON. Valores desconhecidos caem em [BackupMode.mirror].
 BackupMode backupModeFromString(Object? value) {
   final raw = (value ?? '').toString().trim().toLowerCase();
   return raw == 'copy' ? BackupMode.copy : BackupMode.mirror;

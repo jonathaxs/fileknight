@@ -1,4 +1,4 @@
-// Main screen: destination, entry cards, dry-run switch and backup actions.
+// Tela principal: destino, cartões de entrada, switch de simulação e ações de backup.
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Build a drag-to-install .dmg for FileKnight (macOS).
-# Run from the fileknight_flutter project root: packaging/macos/build_dmg.sh
+# Gera o .dmg de instalação (arrastar para o Applications) do FileKnight (macOS).
+# Rode a partir da raiz do projeto fileknight_flutter: packaging/macos/build_dmg.sh
 set -euo pipefail
 
 version="$(grep '^version:' pubspec.yaml | sed 's/version: //; s/+.*//')"

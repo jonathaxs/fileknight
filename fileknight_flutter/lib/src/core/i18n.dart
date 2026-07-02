@@ -1,17 +1,18 @@
-// Translations and OS language detection (English / Brazilian Portuguese).
+// Traduções e detecção do idioma do sistema (inglês / português do Brasil).
 //
-// Strings are kept as plain Dart maps so the core stays Flutter-free and
-// testable. The GUI stage can later move these into the localization system.
+// As strings ficam em mapas Dart simples para o core continuar livre de
+// Flutter e testável. Uma etapa futura pode migrá-las para o sistema de
+// localização oficial do Flutter.
 
 import 'dart:io';
 
-/// Returns 'pt-BR' when the OS locale is Portuguese, otherwise 'en'.
+/// Retorna 'pt-BR' quando o idioma do sistema é português; caso contrário, 'en'.
 String detectLanguageCode() {
   final locale = Platform.localeName.toLowerCase();
   return locale.startsWith('pt') ? 'pt-BR' : 'en';
 }
 
-/// Load the string table for [code], falling back to English.
+/// Carrega a tabela de strings de [code], com fallback para inglês.
 Map<String, String> loadLocale(String code) {
   switch (code) {
     case 'pt-BR':
@@ -21,7 +22,7 @@ Map<String, String> loadLocale(String code) {
   }
 }
 
-/// Look up [key], returning the key itself when it is missing.
+/// Busca [key], retornando a própria chave quando ela não existe.
 String translate(Map<String, String> strings, String key) =>
     strings[key] ?? key;
 

@@ -1,55 +1,58 @@
-# Packaging FileKnight
+# Empacotamento do FileKnight
 
-Each platform is built on its own OS. App id: `io.github.jonathaxs.fileknight`.
+Cada plataforma é compilada no próprio sistema operacional dela.
+App id: `io.github.jonathaxs.fileknight`.
 
-## macOS — `.dmg` (build on Mac)
+## macOS — `.dmg` (compilar no Mac)
 
 ```
 cd fileknight_flutter
 packaging/macos/build_dmg.sh
 ```
 
-Produces `dist/FileKnight-<version>-macos.dmg` (drag onto Applications).
+Gera `dist/FileKnight-<versão>-macos.dmg` (arrastar para o Applications).
 
-The app is **ad-hoc signed, not notarized**. On other Macs, Gatekeeper warns on
-first launch — users right-click → Open. To distribute without warnings you need
-an Apple Developer account (~US$99/yr) to sign with a Developer ID and notarize.
+O app sai com **assinatura ad-hoc, sem notarização**. Em outros Macs, o
+Gatekeeper avisa na primeira abertura — o usuário contorna com botão direito →
+Abrir. Para distribuir sem avisos é preciso uma conta Apple Developer
+(~US$99/ano) para assinar com Developer ID e notarizar.
 
-## Windows — `.exe` installer (build on Windows)
+## Windows — instalador `.exe` (compilar no Windows)
 
-1. Install Flutter and Visual Studio (with the "Desktop development with C++" workload).
+1. Instale o Flutter e o Visual Studio (com o workload "Desktop development with C++").
 2. `flutter build windows --release`
-3. Install Inno Setup: https://jrsoftware.org/isinfo.php
-4. Open `packaging/windows/fileknight.iss` in Inno Setup and compile.
-   Output: `dist/FileKnight-<version>-windows-setup.exe`.
+3. Instale o Inno Setup: https://jrsoftware.org/isinfo.php
+4. Abra `packaging/windows/fileknight.iss` no Inno Setup e compile.
+   Saída: `dist/FileKnight-<versão>-windows-setup.exe`.
 
-(Optional: a code-signing certificate removes the SmartScreen warning.)
+(Opcional: um certificado de code signing remove o aviso do SmartScreen.)
 
-## Linux — `.flatpak` (build on Linux, e.g. Bazzite)
+## Linux — `.flatpak` (compilar no Linux, ex.: Bazzite)
 
 1. `flutter build linux --release`
-2. Copy the built bundle next to the manifest:
+2. Copie o bundle compilado para o lado do manifesto:
    ```
    cp -r build/linux/x64/release/bundle packaging/linux/bundle
    ```
-3. Install the runtime and build:
+3. Instale o runtime e faça o build:
    ```
    flatpak install flathub org.freedesktop.Platform//24.08 org.freedesktop.Sdk//24.08
    flatpak-builder --force-clean --user --install build-dir \
      packaging/linux/io.github.jonathaxs.fileknight.yml
    ```
-4. To produce a single shareable `.flatpak`:
+4. Para gerar um único `.flatpak` compartilhável:
    ```
    flatpak-builder --repo=repo --force-clean build-dir \
      packaging/linux/io.github.jonathaxs.fileknight.yml
    flatpak build-bundle repo FileKnight.flatpak io.github.jonathaxs.fileknight
    ```
 
-This manifest is a starting point — expect to adjust the runtime version on Bazzite.
+Este manifesto é um ponto de partida — pode ser preciso ajustar a versão do
+runtime no Bazzite.
 
-## TODO before a public release
+## TODO antes de um release público
 
-- Add a `LICENSE` file and set the real SPDX id in the Linux metainfo.
-- macOS: Developer ID signing + notarization.
-- Linux: add screenshots to the AppStream metainfo for Flathub.
-- Bump `version:` in `pubspec.yaml` per release.
+- Adicionar um arquivo `LICENSE` e definir o id SPDX real no metainfo do Linux.
+- macOS: assinatura Developer ID + notarização.
+- Linux: adicionar screenshots ao metainfo AppStream para o Flathub.
+- Subir a `version:` no `pubspec.yaml` a cada release.

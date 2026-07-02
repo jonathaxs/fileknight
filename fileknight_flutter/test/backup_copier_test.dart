@@ -48,7 +48,7 @@ void main() {
     await BackupCopier.copyEntry(entry, dest, dryRun: false);
     final mirrored = Directory('${dest.path}/Folder/src');
 
-    // A stale file in the backup and a new file in the source.
+    // Um arquivo obsoleto no backup e um arquivo novo na origem.
     File('${mirrored.path}/stale.txt').writeAsStringSync('stale');
     File('${src.path}/b.txt').writeAsStringSync('B');
 
@@ -85,7 +85,7 @@ void main() {
     final mirrored = Directory('${dest.path}/Folder/src');
     expect(File('${mirrored.path}/a.txt').existsSync(), true);
 
-    // Source disappears; the next run must fail without destroying the backup.
+    // A origem some; a próxima execução deve falhar sem destruir o backup.
     src.deleteSync(recursive: true);
 
     await expectLater(

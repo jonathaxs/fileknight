@@ -1,8 +1,8 @@
-// Material 3 theme for FileKnight (built from a single seed color).
+// Tema Material 3 do FileKnight (construído a partir de uma única cor semente).
 
 import 'package:flutter/material.dart';
 
-/// A royal/steel blue evokes the "knight" identity.
+/// Um azul-royal/aço evoca a identidade de "cavaleiro".
 const Color _seedColor = Color(0xFF3457D5);
 
 ThemeData buildFileKnightTheme(Brightness brightness) {
