@@ -1,10 +1,16 @@
 ![Status](https://img.shields.io/badge/Status-Work_In_Progress-yellow?style=for-the-badge)
 
-<img align="left" src="git/appicons/fileknight_icon_rounded.png" width="100">
-
-![Python 3](https://img.shields.io/badge/Python_3-3776AB?logo=python&logoColor=ffdd54&style=for-the-badge)
-
 # FileKnight
+
+**Um app multiplataforma simples que protege seus arquivos contra o esquecimento.**
+
+Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando como um ponto de verificação confiável.
+
+*Instruções em `info.txt`*
+
+---
+
+**_English:_**
 
 **A simple cross-platform tool that protects your files from being lost.**
 
