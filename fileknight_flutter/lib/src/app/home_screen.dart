@@ -449,37 +449,85 @@ class HomeScreen extends StatelessWidget {
   }
 
   Future<void> _showSettingsDialog(BuildContext context) async {
-    final selected = await showDialog<String>(
+    await showDialog<void>(
       context: context,
-      builder: (context) => SimpleDialog(
-        title: Text(controller.tr('language_label')),
-        children: [
-          _langOption(context, 'auto', controller.tr('language_auto')),
-          _langOption(context, 'en', 'English'),
-          _langOption(context, 'pt-BR', 'Português (Brasil)'),
+      builder: (context) => AlertDialog(
+        title: Text(controller.tr('menu_settings')),
+        // Escuta o controller para as opções refletirem a escolha na hora
+        // (idioma e tema são aplicados ao vivo, sem fechar o diálogo).
+        content: ListenableBuilder(
+          listenable: controller,
+          builder: (context, _) => Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _sectionLabel(context, controller.tr('language_label')),
+              _settingOption(context, controller.config.language == 'auto',
+                  controller.tr('language_auto'),
+                  () => controller.setLanguage('auto')),
+              _settingOption(context, controller.config.language == 'en',
+                  'English', () => controller.setLanguage('en')),
+              _settingOption(context, controller.config.language == 'pt-BR',
+                  'Português (Brasil)', () => controller.setLanguage('pt-BR')),
+              const SizedBox(height: 16),
+              _sectionLabel(context, controller.tr('theme_label')),
+              _settingOption(context, controller.config.themeMode == 'auto',
+                  controller.tr('theme_auto'),
+                  () => controller.setThemeMode('auto')),
+              _settingOption(context, controller.config.themeMode == 'light',
+                  controller.tr('theme_light'),
+                  () => controller.setThemeMode('light')),
+              _settingOption(context, controller.config.themeMode == 'dark',
+                  controller.tr('theme_dark'),
+                  () => controller.setThemeMode('dark')),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(controller.tr('btn_close')),
+          ),
         ],
       ),
     );
-    if (selected != null) {
-      await controller.setLanguage(selected);
-    }
   }
 
-  Widget _langOption(BuildContext context, String code, String label) {
-    final selected = controller.config.language == code;
-    return SimpleDialogOption(
-      onPressed: () => Navigator.pop(context, code),
-      child: Row(
-        children: [
-          Icon(
-            selected
-                ? Icons.radio_button_checked
-                : Icons.radio_button_unchecked,
-            size: 18,
-          ),
-          const SizedBox(width: 12),
-          Text(label),
-        ],
+  // Rótulo de uma seção do diálogo de configurações (ex.: "Idioma", "Tema").
+  Widget _sectionLabel(BuildContext context, String text) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Text(
+        text,
+        style: theme.textTheme.labelLarge
+            ?.copyWith(color: theme.colorScheme.primary),
+      ),
+    );
+  }
+
+  // Uma opção selecionável (rádio) dentro de uma seção de configurações.
+  Widget _settingOption(
+      BuildContext context, bool selected, String label, VoidCallback onTap) {
+    final cs = Theme.of(context).colorScheme;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+        child: Row(
+          children: [
+            Icon(
+              selected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_unchecked,
+              size: 18,
+              color: selected ? cs.primary : cs.onSurfaceVariant,
+            ),
+            const SizedBox(width: 12),
+            Text(label),
+          ],
+        ),
       ),
     );
   }

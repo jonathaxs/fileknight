@@ -8,6 +8,8 @@ import 'entry.dart';
 
 class AppConfig {
   String language;
+  // Tema da interface: 'auto' (segue o sistema), 'light' ou 'dark'.
+  String themeMode;
   bool dryRun;
   String destinationRoot;
   List<Entry> entries;
@@ -15,6 +17,7 @@ class AppConfig {
 
   AppConfig({
     this.language = 'auto',
+    this.themeMode = 'auto',
     this.dryRun = false,
     this.destinationRoot = '~/Desktop/FileKnight',
     List<Entry>? entries,
@@ -33,6 +36,7 @@ class AppConfig {
     }
     return AppConfig(
       language: (json['language'] ?? 'auto').toString(),
+      themeMode: (json['theme_mode'] ?? 'auto').toString(),
       dryRun: json['dry_run'] == true,
       destinationRoot: (json['destination_root'] ?? '').toString(),
       entries: parsed,
@@ -46,6 +50,7 @@ class AppConfig {
   Map<String, dynamic> toJson() => {
         if (meta != null) '_meta': meta,
         'language': language,
+        'theme_mode': themeMode,
         'dry_run': dryRun,
         'destination_root': destinationRoot,
         'entries': entries.map((e) => e.toJson()).toList(),
@@ -53,6 +58,7 @@ class AppConfig {
 
   factory AppConfig.defaults() => AppConfig(
         language: 'auto',
+        themeMode: 'auto',
         dryRun: false,
         destinationRoot: '~/Desktop/FileKnight',
         entries: const [

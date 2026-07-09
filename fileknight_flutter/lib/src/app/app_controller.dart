@@ -78,6 +78,13 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Define o tema da interface: 'auto', 'light' ou 'dark'.
+  Future<void> setThemeMode(String value) async {
+    config.themeMode = value;
+    await _save();
+    notifyListeners();
+  }
+
   Future<void> addOrUpdateEntry({
     required String name,
     required String source,
