@@ -6,5 +6,8 @@
 	<true/>
 	<key>com.apple.security.network.server</key>
 	<true/>
+	<!-- Necessária para o file_picker abrir o diálogo nativo de seleção de arquivos/pastas. -->
+	<key>com.apple.security.files.user-selected.read-write</key>
+	<true/>
 </dict>
 </plist>
