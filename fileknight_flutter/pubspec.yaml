@@ -37,6 +37,10 @@ dependencies:
   path: ^1.9.1
   path_provider: ^2.1.6
   file_picker: ^11.0.2
+  tray_manager: ^0.5.3
+  window_manager: ^0.5.2
+  launch_at_startup: ^0.5.1
+  package_info_plus: ^9.0.1
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +75,10 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # Ícones da bandeja do sistema (usados em tempo de execução).
+  assets:
+    - assets/tray/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

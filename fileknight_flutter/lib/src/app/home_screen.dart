@@ -455,32 +455,41 @@ class HomeScreen extends StatelessWidget {
         title: Text(controller.tr('menu_settings')),
         // Escuta o controller para as opções refletirem a escolha na hora
         // (idioma e tema são aplicados ao vivo, sem fechar o diálogo).
-        content: ListenableBuilder(
-          listenable: controller,
-          builder: (context, _) => Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _sectionLabel(context, controller.tr('language_label')),
-              _settingOption(context, controller.config.language == 'auto',
-                  controller.tr('language_auto'),
-                  () => controller.setLanguage('auto')),
-              _settingOption(context, controller.config.language == 'en',
-                  'English', () => controller.setLanguage('en')),
-              _settingOption(context, controller.config.language == 'pt-BR',
-                  'Português (Brasil)', () => controller.setLanguage('pt-BR')),
-              const SizedBox(height: 16),
-              _sectionLabel(context, controller.tr('theme_label')),
-              _settingOption(context, controller.config.themeMode == 'auto',
-                  controller.tr('theme_auto'),
-                  () => controller.setThemeMode('auto')),
-              _settingOption(context, controller.config.themeMode == 'light',
-                  controller.tr('theme_light'),
-                  () => controller.setThemeMode('light')),
-              _settingOption(context, controller.config.themeMode == 'dark',
-                  controller.tr('theme_dark'),
-                  () => controller.setThemeMode('dark')),
-            ],
+        content: SizedBox(
+          width: 340,
+          child: SingleChildScrollView(
+            child: ListenableBuilder(
+              listenable: controller,
+              builder: (context, _) => Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _sectionLabel(context, controller.tr('language_label')),
+                  _settingOption(context, controller.config.language == 'auto',
+                      controller.tr('language_auto'),
+                      () => controller.setLanguage('auto')),
+                  _settingOption(context, controller.config.language == 'en',
+                      'English', () => controller.setLanguage('en')),
+                  _settingOption(context, controller.config.language == 'pt-BR',
+                      'Português (Brasil)',
+                      () => controller.setLanguage('pt-BR')),
+                  const SizedBox(height: 16),
+                  _sectionLabel(context, controller.tr('theme_label')),
+                  _settingOption(context, controller.config.themeMode == 'auto',
+                      controller.tr('theme_auto'),
+                      () => controller.setThemeMode('auto')),
+                  _settingOption(context, controller.config.themeMode == 'light',
+                      controller.tr('theme_light'),
+                      () => controller.setThemeMode('light')),
+                  _settingOption(context, controller.config.themeMode == 'dark',
+                      controller.tr('theme_dark'),
+                      () => controller.setThemeMode('dark')),
+                  const SizedBox(height: 16),
+                  _sectionLabel(context, controller.tr('startup_label')),
+                  _autoStartRow(context),
+                ],
+              ),
+            ),
           ),
         ),
         actions: [
@@ -503,6 +512,33 @@ class HomeScreen extends StatelessWidget {
         style: theme.textTheme.labelLarge
             ?.copyWith(color: theme.colorScheme.primary),
       ),
+    );
+  }
+
+  // Linha com o interruptor de "iniciar com o sistema".
+  Widget _autoStartRow(BuildContext context) {
+    final theme = Theme.of(context);
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(controller.tr('autostart_label')),
+              const SizedBox(height: 2),
+              Text(
+                controller.tr('autostart_desc'),
+                style: theme.textTheme.bodySmall
+                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              ),
+            ],
+          ),
+        ),
+        Switch(
+          value: controller.config.autoStart,
+          onChanged: (value) => controller.setAutoStart(value),
+        ),
+      ],
     );
   }
 

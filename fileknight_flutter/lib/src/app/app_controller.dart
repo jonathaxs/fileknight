@@ -5,6 +5,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:launch_at_startup/launch_at_startup.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -81,6 +82,24 @@ class AppController extends ChangeNotifier {
   /// Define o tema da interface: 'auto', 'light' ou 'dark'.
   Future<void> setThemeMode(String value) async {
     config.themeMode = value;
+    await _save();
+    notifyListeners();
+  }
+
+  /// Liga/desliga o iniciar-com-o-sistema (login). Registra no SO via
+  /// launch_at_startup e salva a preferência no config.
+  Future<void> setAutoStart(bool value) async {
+    config.autoStart = value;
+    try {
+      if (value) {
+        await launchAtStartup.enable();
+      } else {
+        await launchAtStartup.disable();
+      }
+    } catch (error) {
+      // Se o SO recusar o registro, não quebra o app — só registra no log.
+      await _appendLogLine('autostart falhou: $error');
+    }
     await _save();
     notifyListeners();
   }
@@ -233,6 +252,18 @@ class AppController extends ChangeNotifier {
       );
     } catch (_) {
       // Falha no log nunca pode quebrar um backup.
+    }
+  }
+
+  // Escreve uma linha avulsa no log (eventos gerais, não ligados a uma entrada).
+  Future<void> _appendLogLine(String message) async {
+    final file = _logFile;
+    if (file == null) return;
+    final stamp = DateTime.now().toIso8601String();
+    try {
+      await file.writeAsString('[$stamp] $message\n', mode: FileMode.append);
+    } catch (_) {
+      // Log é best-effort; nunca quebra o fluxo.
     }
   }
 

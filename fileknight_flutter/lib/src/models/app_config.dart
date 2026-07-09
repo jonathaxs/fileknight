@@ -10,6 +10,8 @@ class AppConfig {
   String language;
   // Tema da interface: 'auto' (segue o sistema), 'light' ou 'dark'.
   String themeMode;
+  // Iniciar com o sistema (login), abrindo oculto na bandeja.
+  bool autoStart;
   bool dryRun;
   String destinationRoot;
   List<Entry> entries;
@@ -18,6 +20,7 @@ class AppConfig {
   AppConfig({
     this.language = 'auto',
     this.themeMode = 'auto',
+    this.autoStart = false,
     this.dryRun = false,
     this.destinationRoot = '~/Desktop/FileKnight',
     List<Entry>? entries,
@@ -37,6 +40,7 @@ class AppConfig {
     return AppConfig(
       language: (json['language'] ?? 'auto').toString(),
       themeMode: (json['theme_mode'] ?? 'auto').toString(),
+      autoStart: json['auto_start'] == true,
       dryRun: json['dry_run'] == true,
       destinationRoot: (json['destination_root'] ?? '').toString(),
       entries: parsed,
@@ -51,6 +55,7 @@ class AppConfig {
         if (meta != null) '_meta': meta,
         'language': language,
         'theme_mode': themeMode,
+        'auto_start': autoStart,
         'dry_run': dryRun,
         'destination_root': destinationRoot,
         'entries': entries.map((e) => e.toJson()).toList(),
