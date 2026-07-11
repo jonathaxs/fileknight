@@ -105,6 +105,12 @@ const Map<String, String> _en = {
   'menu_log': 'View log',
   'log_title': 'Backup log',
   'log_empty': 'No backups yet.',
+  'help_io_title': 'Export and import',
+  'help_io_body':
+      'Export saves all your entries and settings (destination, language, theme) into a single .json file. Keep it as a backup or move it to another computer.\n\nImport loads one of these files back, replacing the current configuration. Handy for restoring your setup or syncing between machines.\n\nNote: this only moves your list of entries and settings. It does not copy the actual backed-up files.',
+  'help_entries_title': 'What are entries?',
+  'help_entries_body':
+      'Each entry is a file or folder you want to protect, like your game saves.\n\nWhen you run a backup, FileKnight copies every entry into the backup destination shown at the top.\n\nEach entry has a mode:\n• Mirror: makes the backup identical to the source, deleting files that no longer exist there.\n• Copy: only adds and updates files, never deletes anything from the backup.',
 };
 
 const Map<String, String> _ptBr = {
@@ -186,4 +192,10 @@ const Map<String, String> _ptBr = {
   'menu_log': 'Ver registro',
   'log_title': 'Registro de backups',
   'log_empty': 'Nenhum backup ainda.',
+  'help_io_title': 'Exportar e importar',
+  'help_io_body':
+      'Exportar salva todas as suas entradas e configurações (destino, idioma, tema) em um único arquivo .json. Guarde-o como cópia de segurança ou leve para outro computador.\n\nImportar carrega um desses arquivos de volta, substituindo a configuração atual. Útil para restaurar seu setup ou sincronizar entre máquinas.\n\nObservação: isso só move sua lista de entradas e as configurações, não copia os arquivos que já foram salvos no backup.',
+  'help_entries_title': 'O que são entradas?',
+  'help_entries_body':
+      'Cada entrada é um arquivo ou pasta que você quer proteger, como seus saves de jogo.\n\nAo fazer um backup, o FileKnight copia cada entrada para o destino mostrado no topo.\n\nCada entrada tem um modo:\n• Espelho: deixa o backup idêntico à origem, apagando arquivos que não existem mais lá.\n• Cópia: só adiciona e atualiza arquivos, nunca apaga nada do backup.',
 };

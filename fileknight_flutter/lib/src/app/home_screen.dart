@@ -64,6 +64,12 @@ class HomeScreen extends StatelessWidget {
             icon: const Icon(Icons.download_outlined),
           ),
           IconButton(
+            tooltip: controller.tr('help_io_title'),
+            onPressed: () => _showInfoDialog(
+                context, 'help_io_title', 'help_io_body'),
+            icon: const Icon(Icons.help_outline),
+          ),
+          IconButton(
             tooltip: controller.tr('menu_settings'),
             onPressed: () => _showSettingsDialog(context),
             icon: const Icon(Icons.settings_outlined),
@@ -83,7 +89,16 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Text(controller.tr('label_entries'),
                     style: theme.textTheme.titleMedium),
-                const SizedBox(width: 8),
+                const SizedBox(width: 6),
+                IconButton(
+                  tooltip: controller.tr('help_entries_title'),
+                  visualDensity: VisualDensity.compact,
+                  iconSize: 18,
+                  onPressed: () => _showInfoDialog(
+                      context, 'help_entries_title', 'help_entries_body'),
+                  icon: const Icon(Icons.help_outline),
+                ),
+                const SizedBox(width: 2),
                 _countBadge(context, entries.length),
                 const Spacer(),
                 FilledButton.tonalIcon(
@@ -673,6 +688,32 @@ class HomeScreen extends StatelessWidget {
     if (confirmed == true) {
       await controller.removeEntry(entry.name);
     }
+  }
+
+  // Diálogo de ajuda simples: título e um texto explicativo (chaves do i18n).
+  Future<void> _showInfoDialog(
+      BuildContext context, String titleKey, String bodyKey) async {
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(controller.tr(titleKey)),
+        content: SizedBox(
+          width: 420,
+          child: SingleChildScrollView(
+            child: Text(
+              controller.tr(bodyKey),
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(controller.tr('btn_close')),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _showLogDialog(BuildContext context) async {
