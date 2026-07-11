@@ -22,7 +22,7 @@ class AppConfig {
     this.themeMode = 'auto',
     this.autoStart = false,
     this.dryRun = false,
-    this.destinationRoot = '~/Desktop/FileKnight',
+    this.destinationRoot = '~/Downloads/FileKnight',
     List<Entry>? entries,
     this.meta,
   }) : entries = entries == null ? <Entry>[] : List<Entry>.of(entries);
@@ -65,14 +65,8 @@ class AppConfig {
         language: 'auto',
         themeMode: 'auto',
         dryRun: false,
-        destinationRoot: '~/Desktop/FileKnight',
-        entries: const [
-          Entry(
-            name: 'Example Entry',
-            source: '~/Desktop/ExampleSource',
-            mode: BackupMode.mirror,
-          ),
-        ],
+        destinationRoot: '~/Downloads/FileKnight',
+        entries: const [],
       );
 
   /// Entradas seguras para backup: nome e origem precisam estar preenchidos.

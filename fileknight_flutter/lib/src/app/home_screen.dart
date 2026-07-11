@@ -48,13 +48,6 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          Text(controller.tr('label_simulate'), style: theme.textTheme.bodyMedium),
-          Switch(
-            value: controller.config.dryRun,
-            onChanged: (value) {
-              controller.setDryRun(value);
-            },
-          ),
           PopupMenuButton<String>(
             onSelected: (value) {
               switch (value) {
@@ -367,30 +360,28 @@ class HomeScreen extends StatelessWidget {
   }
 
   Future<void> _runAll(BuildContext context) async {
-    if (!controller.config.dryRun) {
-      final hasMirror = controller.config
-          .validEntries()
-          .any((e) => e.mode == BackupMode.mirror);
-      if (hasMirror) {
-        final confirmed = await showDialog<bool>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text(controller.tr('confirm_title')),
-            content: Text(controller.tr('confirm_mirror_body')),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: Text(controller.tr('btn_cancel')),
-              ),
-              FilledButton(
-                onPressed: () => Navigator.pop(context, true),
-                child: Text(controller.tr('btn_continue')),
-              ),
-            ],
-          ),
-        );
-        if (confirmed != true) return;
-      }
+    final hasMirror = controller.config
+        .validEntries()
+        .any((e) => e.mode == BackupMode.mirror);
+    if (hasMirror) {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(controller.tr('confirm_title')),
+          content: Text(controller.tr('confirm_mirror_body')),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: Text(controller.tr('btn_cancel')),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: Text(controller.tr('btn_continue')),
+            ),
+          ],
+        ),
+      );
+      if (confirmed != true) return;
     }
     final message = await controller.runAll();
     if (!context.mounted) return;

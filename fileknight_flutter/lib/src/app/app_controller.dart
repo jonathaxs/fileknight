@@ -175,6 +175,9 @@ class AppController extends ChangeNotifier {
       return tr('no_destination');
     }
     final entries = config.validEntries();
+    if (entries.isEmpty) {
+      return tr('no_entries');
+    }
     for (final entry in entries) {
       _errors.remove(entry.name);
       _progress[entry.name] = 0;

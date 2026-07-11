@@ -43,7 +43,8 @@ void main() {
     final config = await ConfigStore.ensureExists(file);
 
     expect(await file.exists(), true);
-    expect(config.entries, isNotEmpty);
+    expect(config.entries, isEmpty);
+    expect(config.destinationRoot, '~/Downloads/FileKnight');
     expect(config.meta?['created_at'], isNotNull);
   });
 
