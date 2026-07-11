@@ -48,41 +48,25 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              switch (value) {
-                case 'settings':
-                  _showSettingsDialog(context);
-                case 'export':
-                  _exportConfig(context);
-                case 'import':
-                  _importConfig(context);
-                case 'log':
-                  _showLogDialog(context);
-              }
-            },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'settings',
-                child:
-                    _menuRow(Icons.settings_outlined, controller.tr('menu_settings')),
-              ),
-              PopupMenuItem(
-                value: 'export',
-                child:
-                    _menuRow(Icons.upload_outlined, controller.tr('export_config')),
-              ),
-              PopupMenuItem(
-                value: 'import',
-                child: _menuRow(
-                    Icons.download_outlined, controller.tr('import_config')),
-              ),
-              PopupMenuItem(
-                value: 'log',
-                child: _menuRow(
-                    Icons.receipt_long_outlined, controller.tr('menu_log')),
-              ),
-            ],
+          IconButton(
+            tooltip: controller.tr('menu_log'),
+            onPressed: () => _showLogDialog(context),
+            icon: const Icon(Icons.receipt_long_outlined),
+          ),
+          IconButton(
+            tooltip: controller.tr('export_config'),
+            onPressed: () => _exportConfig(context),
+            icon: const Icon(Icons.upload_outlined),
+          ),
+          IconButton(
+            tooltip: controller.tr('import_config'),
+            onPressed: () => _importConfig(context),
+            icon: const Icon(Icons.download_outlined),
+          ),
+          IconButton(
+            tooltip: controller.tr('menu_settings'),
+            onPressed: () => _showSettingsDialog(context),
+            icon: const Icon(Icons.settings_outlined),
           ),
           const SizedBox(width: 8),
         ],
@@ -401,16 +385,6 @@ class HomeScreen extends StatelessWidget {
     if (path != null) {
       await controller.setDestination(path);
     }
-  }
-
-  Widget _menuRow(IconData icon, String label) {
-    return Row(
-      children: [
-        Icon(icon, size: 18),
-        const SizedBox(width: 12),
-        Text(label),
-      ],
-    );
   }
 
   Future<void> _exportConfig(BuildContext context) async {
