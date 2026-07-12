@@ -10,12 +10,22 @@
 struct _MyApplication {
   GtkApplication parent_instance;
   char** dart_entrypoint_arguments;
+  // Verdadeiro quando o app foi aberto com --hidden (autostart do login).
+  gboolean start_hidden;
 };
 
 G_DEFINE_TYPE(MyApplication, my_application, GTK_TYPE_APPLICATION)
 
 // Called when first Flutter frame received.
 static void first_frame_cb(MyApplication* self, FlView* view) {
+  // Iniciar-com-o-sistema: quando o app abre com --hidden não mostramos a
+  // janela; o FileKnight fica só na bandeja. Sem isso o runner mostraria a
+  // janela no primeiro frame, ganhando a corrida do windowManager.hide() do
+  // Dart, e a janela abriria em vez de ir pra bandeja. Ela só aparece quando o
+  // Dart chama windowManager.show() (menu da bandeja/Abrir).
+  if (self->start_hidden) {
+    return;
+  }
   gtk_widget_show(gtk_widget_get_toplevel(GTK_WIDGET(view)));
 }
 
@@ -85,6 +95,15 @@ static gboolean my_application_local_command_line(GApplication* application,
   MyApplication* self = MY_APPLICATION(application);
   // Strip out the first argument as it is the binary name.
   self->dart_entrypoint_arguments = g_strdupv(*arguments + 1);
+
+  // Detecta o --hidden do autostart para nascer escondido (ver first_frame_cb).
+  for (char** arg = self->dart_entrypoint_arguments;
+       arg != nullptr && *arg != nullptr; arg++) {
+    if (g_strcmp0(*arg, "--hidden") == 0) {
+      self->start_hidden = TRUE;
+      break;
+    }
+  }
 
   g_autoptr(GError) error = nullptr;
   if (!g_application_register(application, nullptr, &error)) {

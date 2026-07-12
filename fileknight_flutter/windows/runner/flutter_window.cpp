@@ -27,9 +27,19 @@ bool FlutterWindow::OnCreate() {
   RegisterPlugins(flutter_controller_->engine());
   SetChildContent(flutter_controller_->view()->GetNativeWindow());
 
-  flutter_controller_->engine()->SetNextFrameCallback([&]() {
-    this->Show();
-  });
+  // Iniciar-com-o-sistema: o login do Windows chama o app com --hidden. Nesse
+  // caso não registramos o Show(), senão o runner nativo mostraria a janela no
+  // primeiro frame e ganharia a corrida do windowManager.hide() do Dart, e a
+  // janela abriria em vez de ficar só na bandeja. Escondido, a janela só
+  // aparece quando o Dart chama windowManager.show() (menu da bandeja/Abrir).
+  std::wstring command_line = GetCommandLineW();
+  bool start_hidden = command_line.find(L"--hidden") != std::wstring::npos;
+
+  if (!start_hidden) {
+    flutter_controller_->engine()->SetNextFrameCallback([&]() {
+      this->Show();
+    });
+  }
 
   // Flutter can complete the first frame before the "show window" callback is
   // registered. The following call ensures a frame is pending to ensure the
