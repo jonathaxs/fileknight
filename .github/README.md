@@ -4,7 +4,7 @@
 
 - Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando como um ponto de verificação confiável.
 
-_Instaladores no Realease._
+_Instaladores no Release._
 
 ---
 
