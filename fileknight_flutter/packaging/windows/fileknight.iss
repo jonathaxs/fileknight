@@ -2,7 +2,10 @@
 ; Primeiro compile o app: flutter build windows --release
 ; Depois compile este script com o Inno Setup (https://jrsoftware.org/isinfo.php).
 
-#define AppVersion "1.0.0"
+; A versão pode ser sobrescrita na linha de comando: ISCC.exe /DAppVersion=0.1.0
+#ifndef AppVersion
+  #define AppVersion "0.1.0"
+#endif
 
 [Setup]
 AppName=FileKnight
