@@ -1,22 +1,20 @@
-![Status](https://img.shields.io/badge/Status-Work_In_Progress-yellow?style=for-the-badge)
-
 # FileKnight
 
-**Um app multiplataforma simples que protege seus arquivos contra o esquecimento.**
+**Um programa simples que protege seus arquivos contra o esquecimento.**
 
-Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando como um ponto de verificação confiável.
+- Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando como um ponto de verificação confiável.
 
-*Instruções em `info.txt`*
+_Instaladores no Realease._
 
 ---
 
 **_English:_**
 
-**A simple cross-platform tool that protects your files from being lost.**
+**A simple tool that protects your files from being lost.**
 
-Automates copying folders or files from one location to another, acting as a reliable checkpoint against forgetfulness.
+- Automates copying folders or files from one location to another, acting as a reliable checkpoint against forgetfulness.
 
-*Instructions on `info.txt`*
+_Installers in the Release._
 
 # 
 
