@@ -2,9 +2,9 @@
 ; Primeiro compile o app: flutter build windows --release
 ; Depois compile este script com o Inno Setup (https://jrsoftware.org/isinfo.php).
 
-; A versão pode ser sobrescrita na linha de comando: ISCC.exe /DAppVersion=0.2.0
+; A versão pode ser sobrescrita na linha de comando: ISCC.exe /DAppVersion=0.2.1
 #ifndef AppVersion
-  #define AppVersion "0.2.0"
+  #define AppVersion "0.2.1"
 #endif
 
 [Setup]
