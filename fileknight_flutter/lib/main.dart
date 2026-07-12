@@ -89,8 +89,15 @@ class _FileKnightAppState extends State<FileKnightApp>
                 : 'assets/tray/tray_color.png',
         isTemplate: Platform.isMacOS,
       );
-      await trayManager.setToolTip('FileKnight');
+      // Monta o menu logo após o ícone. No Linux (AppIndicator) o menu é a
+      // única forma de interação: clicar no ícone abre esse menu, então ele
+      // precisa estar pronto antes de qualquer outra coisa que possa falhar.
       await _rebuildTrayMenu();
+      // setToolTip não é implementado no Linux e lança exceção; só chamamos
+      // onde existe. Antes ele rodava aqui e derrubava o menu do Linux junto.
+      if (!Platform.isLinux) {
+        await trayManager.setToolTip('FileKnight');
+      }
     } catch (_) {
       // Se a bandeja não estiver disponível, o app segue funcionando normal.
     }
