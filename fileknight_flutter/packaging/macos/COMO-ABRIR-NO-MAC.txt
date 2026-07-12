@@ -1,0 +1,35 @@
+========================================================================
+ FILEKNIGHT — COMO ABRIR NO MAC
+========================================================================
+
+Como o FileKnight não está assinado pela Apple,
+na primeira vez o macOS bloqueia a abertura. É seguro; é só autorizar
+uma vez:
+
+------------------------------------------------------------------------
+ PASSOS
+------------------------------------------------------------------------
+1) Arraste o FileKnight.app para a pasta "Aplicativos".
+
+2) Dê um duplo-clique nele. Vai aparecer um aviso dizendo que o app não
+   pôde ser aberto (desenvolvedor não identificado). Clique em "OK".
+
+3) Abra Ajustes do Sistema > Privacidade e Segurança. Role até o fim:
+   vai ter uma mensagem sobre o FileKnight ter sido bloqueado. Clique
+   em "Abrir Mesmo Assim" e confirme.
+
+4) Pronto. Nas próximas vezes ele abre normal. A bandeja e o "iniciar
+   com o sistema" ficam nas configurações do app.
+
+------------------------------------------------------------------------
+ Se aparecer "o app está danificado" ou não abrir de jeito nenhum
+------------------------------------------------------------------------
+Isso é a "quarentena" que o macOS coloca em arquivos baixados. No
+Terminal, rode (ajuste o caminho se o app não estiver em Aplicativos):
+
+    xattr -dr com.apple.quarantine /Applications/FileKnight.app
+
+Depois abra normalmente.
+
+Em inglês, veja HOW-TO-OPEN-ON-MAC.txt.
+========================================================================

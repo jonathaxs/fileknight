@@ -28,9 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # O macOS só zipa o código-fonte, então não precisa do Flutter.
       - name: Setup Flutter
-        if: matrix.os != 'macos-latest'
         uses: subosito/flutter-action@v2
         with:
           channel: stable
@@ -44,7 +42,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y clang cmake ninja-build pkg-config \
             libgtk-3-dev liblzma-dev libayatana-appindicator3-dev \
-            rpm ruby ruby-dev build-essential
+            rpm ruby ruby-dev build-essential \
+            squashfs-tools desktop-file-utils libfuse2
           sudo gem install --no-document fpm
 
       - name: Linux — build + pacotes .deb/.rpm

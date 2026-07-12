@@ -75,5 +75,39 @@ fpm -t rpm -f -p "$dist/${APP_NAME}-${version}-1.x86_64.rpm" \
   --depends "libappindicator-gtk3" \
   "${common_args[@]}"
 
+# ---------------------------------------------------------------- AppImage
+# Formato portável (roda em qualquer distro, útil no Arch). Monta um AppDir e
+# empacota com o appimagetool.
+appdir="$(mktemp -d)/FileKnight.AppDir"
+install -d "$appdir/usr/lib/$APP_NAME"
+cp -r "$bundle/." "$appdir/usr/lib/$APP_NAME/"
+
+# AppRun: ponto de entrada que o AppImage executa.
+cat > "$appdir/AppRun" <<EOF
+#!/bin/sh
+HERE="\$(dirname "\$(readlink -f "\$0")")"
+exec "\$HERE/usr/lib/$APP_NAME/$APP_NAME" "\$@"
+EOF
+chmod 755 "$appdir/AppRun"
+
+# O appimagetool exige o .desktop e o ícone na raiz do AppDir (nomes casando).
+cp "$here/$APP_ID.desktop" "$appdir/$APP_ID.desktop"
+cp "$here/$APP_ID.png" "$appdir/$APP_ID.png"
+install -Dm644 "$here/$APP_ID.desktop" "$appdir/usr/share/applications/$APP_ID.desktop"
+install -Dm644 "$here/$APP_ID.png" "$appdir/usr/share/icons/hicolor/512x512/apps/$APP_ID.png"
+
+# Usa o appimagetool do PATH; se não houver, baixa a versão contínua.
+if command -v appimagetool >/dev/null 2>&1; then
+  appimagetool="appimagetool"
+else
+  appimagetool="$(mktemp -d)/appimagetool"
+  curl -fsSL -o "$appimagetool" \
+    "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
+  chmod +x "$appimagetool"
+fi
+
+ARCH=x86_64 "$appimagetool" --appimage-extract-and-run \
+  "$appdir" "$dist/${APP_NAME}-${version}-x86_64.AppImage"
+
 echo "Pacotes gerados em $dist:"
-ls -1 "$dist"/*.deb "$dist"/*.rpm
+ls -1 "$dist"/*.deb "$dist"/*.rpm "$dist"/*.AppImage
