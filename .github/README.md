@@ -1,6 +1,6 @@
 # FileKnight
 
-**Um programa simples que protege seus arquivos contra o esquecimento.**
+**Um programa simples para proteger seus arquivos contra o esquecimento.**
 
 - Automatiza a cópia de pastas ou arquivos de um local para outro, funcionando como um ponto de verificação confiável.
 
@@ -10,7 +10,7 @@ _Instaladores no Realease._
 
 **_English:_**
 
-**A simple tool that protects your files from being lost.**
+**A simple tool to protects your files from being lost.**
 
 - Automates copying folders or files from one location to another, acting as a reliable checkpoint against forgetfulness.
 
