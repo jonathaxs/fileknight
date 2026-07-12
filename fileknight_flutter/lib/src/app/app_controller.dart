@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import '../core/backup_copier.dart';
 import '../core/config_store.dart';
 import '../core/i18n.dart';
+import '../core/macos_autostart.dart';
 import '../core/path_utils.dart';
 import '../models/app_config.dart';
 import '../models/entry.dart';
@@ -86,12 +87,26 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Liga/desliga o iniciar-com-o-sistema (login). Registra no SO via
-  /// launch_at_startup e salva a preferência no config.
+  /// Liga/desliga o iniciar-com-o-sistema (login) e salva a preferência.
+  ///
+  /// No macOS usamos um LaunchAgent próprio (ver [MacosAutostart]), porque o
+  /// login item do launch_at_startup não repassa o --hidden e o app abriria a
+  /// janela no login em vez de ficar só na bandeja. Nas demais plataformas o
+  /// launch_at_startup já registra o --hidden certinho.
   Future<void> setAutoStart(bool value) async {
     config.autoStart = value;
     try {
-      if (value) {
+      if (Platform.isMacOS) {
+        final agent = MacosAutostart(
+          label: 'io.github.jonathaxs.fileknight',
+          executablePath: Platform.resolvedExecutable,
+        );
+        if (value) {
+          agent.enable();
+        } else {
+          agent.disable();
+        }
+      } else if (value) {
         await launchAtStartup.enable();
       } else {
         await launchAtStartup.disable();
