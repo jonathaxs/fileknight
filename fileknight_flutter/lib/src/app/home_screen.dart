@@ -101,6 +101,12 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(width: 2),
                 _countBadge(context, entries.length),
                 const Spacer(),
+                FilledButton.icon(
+                  onPressed: controller.isBusy ? null : () => _runAll(context),
+                  icon: const Icon(Icons.shield_outlined, size: 18),
+                  label: Text(controller.tr('backup_all')),
+                ),
+                const SizedBox(width: 8),
                 FilledButton.tonalIcon(
                   onPressed: () => _showEntryDialog(context),
                   icon: const Icon(Icons.add, size: 18),
@@ -122,7 +128,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: _bottomBar(context),
     );
   }
 
@@ -336,24 +341,6 @@ class HomeScreen extends StatelessWidget {
               style: theme.textTheme.bodySmall
                   ?.copyWith(color: cs.onSurfaceVariant)),
         ],
-      ),
-    );
-  }
-
-  Widget _bottomBar(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-        child: SizedBox(
-          width: double.infinity,
-          child: FilledButton.icon(
-            onPressed: controller.isBusy ? null : () => _runAll(context),
-            icon: const Icon(Icons.shield_outlined),
-            label: Text(controller.tr('backup_all')),
-            style: FilledButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 14)),
-          ),
-        ),
       ),
     );
   }
