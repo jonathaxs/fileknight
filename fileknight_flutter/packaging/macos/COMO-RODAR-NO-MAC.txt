@@ -1,0 +1,94 @@
+========================================================================
+ FILEKNIGHT — COMO RODAR NO MAC (a partir do código-fonte)
+========================================================================
+
+No macOS a gente NÃO usa um instalador empacotado: como o próprio dono do
+Mac é o desenvolvedor, o app roda direto a partir do código-fonte.
+Este guia lista o que instalar (uma vez só) e o comando pra executar.
+
+O app é feito em Flutter. Testado num Mac com Apple Silicon (M3).
+
+
+------------------------------------------------------------------------
+ 1) FERRAMENTAS DE LINHA DE COMANDO DA APPLE + XCODE
+------------------------------------------------------------------------
+Fornecem o compilador que o build do macOS precisa. No Terminal:
+
+    xcode-select --install
+
+(Abre uma janelinha; clique em "Instalar" e espere terminar.)
+
+Para gerar o app "de verdade" (passo 5), instale também o Xcode pela
+App Store e rode uma vez:
+
+    sudo xcodebuild -runFirstLaunch
+
+
+------------------------------------------------------------------------
+ 2) HOMEBREW  (gerenciador de programas do Mac)
+------------------------------------------------------------------------
+Se você ainda NÃO tem o Homebrew, instale com:
+
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+Ao final ele pode pedir pra rodar 2 linhas pra "adicionar ao PATH".
+Copie e cole essas linhas que ele mostrar. Para conferir:
+
+    brew --version
+
+
+------------------------------------------------------------------------
+ 3) FLUTTER  (o framework do app)
+------------------------------------------------------------------------
+    brew install --cask flutter
+
+Depois confira se está tudo certo:
+
+    flutter doctor
+
+Ele mostra um checklist. O que importa aqui é "Flutter" e "Xcode"
+aparecerem com um [✓]. Se pedir pra aceitar as licenças do Android,
+pode ignorar (não usamos Android).
+
+
+------------------------------------------------------------------------
+ 4) ENTRAR NA PASTA DO PROJETO
+------------------------------------------------------------------------
+Esta pasta (a que contém este arquivo) é o projeto. No Terminal:
+
+    cd caminho/para/fileknight_flutter
+
+
+------------------------------------------------------------------------
+ 5) EXECUTAR
+------------------------------------------------------------------------
+>>> Para USAR/TESTAR na hora (mais simples):
+
+    flutter run -d macos
+
+Isso compila e abre o app. Fechar o Terminal encerra o app.
+
+
+>>> Para gerar um app "de verdade" (FileKnight.app) e usar sempre:
+
+    flutter build macos --release
+
+O app fica em:
+
+    build/macos/Build/Products/Release/FileKnight.app
+
+Arraste o FileKnight.app para a pasta "Aplicativos". Na PRIMEIRA vez,
+como não é assinado, o macOS avisa que não confia no app. Contorne
+abrindo com botão direito > Abrir (só na primeira vez). Depois ele
+funciona como um app normal: vai pra bandeja e pode iniciar junto com
+o sistema (opção dentro das configurações do app).
+
+
+------------------------------------------------------------------------
+ OBSERVAÇÕES
+------------------------------------------------------------------------
+- Windows e Linux usam INSTALADORES prontos (.exe / .deb / .rpm)
+  gerados automaticamente pelo GitHub Actions — lá não precisa instalar
+  nada disso acima.
+- Em inglês, veja HOW-TO-RUN-ON-MAC.txt.
+========================================================================
