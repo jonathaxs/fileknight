@@ -18,6 +18,9 @@ _Installers in the Release._
 
 # 
 
+#### Version:
+![Release](https://img.shields.io/github/v/release/jonathaxs/fileknight?style=for-the-badge&labelColor=f0f0f0&color=f0f0f0)
+
 #### Platforms:
 ![macOS](https://img.shields.io/badge/macOS-f0f0f0?logo=apple&logoColor=black&style=for-the-badge)
 ![Linux](https://img.shields.io/badge/Linux-f0f0f0?logo=linux&logoColor=black&style=for-the-badge)
